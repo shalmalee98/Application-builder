@@ -1,0 +1,27 @@
+[
+    {
+        "month": "January",
+        "rainfall": 65,
+        "temperature": 10
+    },
+    {
+        "month": "February",
+        "rainfall": 59,
+        "temperature": 30
+    },
+    {
+        "month": "March",
+        "rainfall": 80,
+        "temperature": 20
+    },
+    {
+        "month": "April",
+        "rainfall": 81,
+        "temperature": 20
+    },
+    {
+        "month": "May",
+        "rainfall": 56,
+        "temperature": 40
+    }
+]

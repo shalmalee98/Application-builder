@@ -1,0 +1,57 @@
+[
+    {
+        "city": "Rome",
+        "population": "2761477",
+        "area": "1285.31"
+    },
+    {
+        "city": "Milan",
+        "population": "1324110",
+        "area": "181.76"
+    },
+    {
+        "city": "Naples",
+        "population": "959574",
+        "area": "117.27"
+    },
+    {
+        "city": "Turin",
+        "population": "907563",
+        "area": "130.17"
+    },
+    {
+        "city": "Palermo",
+        "population": "655875",
+        "area": "158.9"
+    },
+    {
+        "city": "Genoa",
+        "population": "607906",
+        "area": "243.60"
+    },
+    {
+        "city": "Bologna",
+        "population": "380181",
+        "area": "140.7"
+    },
+    {
+        "city": "Florence",
+        "population": "371282",
+        "area": "102.41"
+    },
+    {
+        "city": "Fiumicino",
+        "population": "67370",
+        "area": "213.44"
+    },
+    {
+        "city": "Anzio",
+        "population": "52192",
+        "area": "43.43"
+    },
+    {
+        "city": "Ciampino",
+        "population": "38262",
+        "area": "11"
+    }
+]

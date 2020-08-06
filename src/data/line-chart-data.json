@@ -1,0 +1,12 @@
+[
+    { "name": "Vito", "age": 22, "city": "New York", "weight": 70 },
+    { "name": "Micheal", "age": 6, "city": "Pune", "weight": 86 },
+    { "name": "Vincent", "age": 15, "city": "Parachute", "weight": 90 },
+    { "name": "Tom", "age": 17, "city": "London", "weight": 70 },
+    { "name": "Mary", "age": 10, "city": "Manchester", "weight": 60 },
+    { "name": "Kay", "age": 14, "city": "Oxford", "weight": 44 },
+    { "name": "Sonny", "age": 24, "city": "Edinburg", "weight": 58 },
+    { "name": "Connie", "age": 34, "city": "Cambridge", "weight": 50 },
+    { "name": "Fredo", "age": 44, "city": "Birmingham", "weight": 70 },
+    { "name": "Peter", "age": 84, "city": "Liverpool", "weight": 80 }
+  ]

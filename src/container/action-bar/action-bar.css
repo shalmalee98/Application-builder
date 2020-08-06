@@ -1,0 +1,34 @@
+.menuButton {
+    margin-left: 20;
+  }
+  .menuButtonHidden {
+    display: "none";
+  }
+  .deleteButton {
+    justify-content: center;
+    align-items: center;
+  }
+  .drawerPaper-Actionbar {
+    margin-top: 64;
+    position: relative;
+    white-space: "nowrap";
+    width: 250px;
+    overflow: "scroll";
+    height: "100%";
+  }
+  .drawerPaperClose {
+    overflow-x: "hidden";
+  }
+  
+  .drawer-open-actionbar {
+    width: 250px;
+  }
+  
+  .drawer-close-actionbar {
+    width: 56px;
+  }
+  
+  .action-bar-container .MuiDrawer-paper {
+    top: 64px !important;
+  }
+  

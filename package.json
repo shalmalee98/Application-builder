@@ -3,12 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/lab": "^4.0.0-alpha.49",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "axios": "^0.19.2",
+    "chart.js": "^2.9.3",
+    "d3": "^5.15.0",
+    "http-server": "^0.12.3",
+    "list-react-files": "^0.2.0",
+    "react": "^16.12.0",
+    "react-color": "^2.18.1",
+    "react-dom": "^16.12.0",
+    "react-google-charts": "^3.0.15",
+    "react-rnd": "^10.1.5",
+    "react-scripts": "^2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,0 +1,143 @@
+[
+    {
+        "country": "USA",
+        "total cases": 1621333,
+        "new cases": 431,
+        "total deaths": 96363,
+        "new deaths": 9,
+        "total recovered": 382244,
+        "total tests": 13479242,
+        "population": 330790544
+    },
+    {
+        "country": "Russia",
+        "total cases": 326448,
+        "new cases": 8894,
+        "total deaths": 3249,
+        "new deaths": 150,
+        "total recovered": 99825,
+        "total tests": 8126626,
+        "population": 145927804
+    },
+    {
+        "country": "Brazil",
+        "total cases": 310921,
+        "new cases": 0,
+        "total deaths": 20082,
+        "new deaths": 0,
+        "total recovered": 125960,
+        "total tests": 735224,
+        "population": 212393298
+    },
+    {
+        "country": "Spain",
+        "total cases": 280117,
+        "new cases": 0,
+        "total deaths": 27940,
+        "new deaths": 0,
+        "total recovered": 196958,
+        "total tests": 3037840,
+        "population": 46752851
+    },
+    {
+        "country": "India",
+        "total cases": 119419,
+        "new cases": 1193,
+        "total deaths": 3599,
+        "new deaths": 15,
+        "total recovered": 48957,
+        "total tests": 2719434,
+        "population": 1378492893
+    },
+    {
+        "country": "China",
+        "total cases": 82971,
+        "new cases": 4,
+        "total deaths": 4634,
+        "new deaths": 0,
+        "total recovered": 78255,
+        "total tests": 30000,
+        "population": 1439323776
+    },
+    {
+        "country": "Mexico",
+        "total cases": 59567,
+        "new cases": 2973,
+        "total deaths": 6510,
+        "new deaths": 420,
+        "total recovered": 40657,
+        "total tests": 201838,
+        "population": 128781349
+    },
+    {
+        "country": "Hong Kong",
+        "total cases": 1066,
+        "new cases": 2,
+        "total deaths": 4,
+        "new deaths": 0,
+        "total recovered": 1029,
+        "total tests": 168291,
+        "population": 7490261
+    },
+    {
+        "country": "Canada",
+        "total cases": 81324,
+        "new cases": 0,
+        "total deaths": 6152,
+        "new deaths": 0,
+        "total recovered": 41715,
+        "total tests": 1379731,
+        "population": 37705478
+    },
+    {
+        "country": "Pakistan",
+        "total cases": 50694,
+        "new cases": 2603,
+        "total deaths": 1067,
+        "new deaths": 50,
+        "total recovered": 15201,
+        "total tests": 445987,
+        "population": 220392002
+    },
+    {
+        "country": "Singapore",
+        "total cases": 30426,
+        "new cases": 614,
+        "total deaths": 23,
+        "new deaths": 0,
+        "total recovered": 12117,
+        "total tests": 294414,
+        "population": 5845265
+    },
+    {
+        "country": "Austria",
+        "total cases": 16436,
+        "new cases": 32,
+        "total deaths": 635,
+        "new deaths": 2,
+        "total recovered": 15005,
+        "total tests": 390488,
+        "population": 9000787
+    },
+    {
+        "country": "Fiji",
+        "total cases": 18,
+        "new cases": 0,
+        "total deaths": 0,
+        "new deaths": 0,
+        "total recovered": 15,
+        "total tests": 1300,
+        "population": 895730
+    },
+    {
+        "country": "Guatemala",
+        "total cases": 2512,
+        "new cases": 247,
+        "total deaths": 48,
+        "new deaths": 3,
+        "total recovered": 222,
+        "total tests": 25464,
+        "population": 17877078
+    }
+
+]

@@ -1,0 +1,36 @@
+.menuButton {
+    margin-right: 20;
+    margin-left: 20;
+  }
+  .menuButtonHidden {
+    display: "none";
+  }
+  .side-nav-container .MuiDrawer-paper {
+    overflow: hidden;
+  }
+  .drawerPaper {
+    margin-top: 64;
+    position: relative;
+    white-space: "nowrap";
+    width: 180px;
+  }
+  .drawerPaperClose {
+    overflow-x: "hidden";
+  }
+  
+  .drawer-open {
+    width: 180px;
+  }
+  
+  .drawer-close {
+    width: 58px;
+  }
+  .side-nav-container .MuiDrawer-paper {
+    overflow: hidden;
+    top: 64px !important;
+  }
+  
+  /* .side-nav-container .MuiDrawer-paper {
+    top: 64px !important;
+  } */
+  
