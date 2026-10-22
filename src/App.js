@@ -4,7 +4,6 @@ import SideNav from "./container/side-nav/side-nav";
 import Header from "./container/header/header";
 import ActionBar from "./container/action-bar/action-bar";
 import LandingPage from "./container/landing-page/landing-page";
-import Grid from "@material-ui/core/Grid";
 import "./App.css";
 import { PROJECTS_PATH, save_file } from "./services/services";
 
@@ -416,31 +415,16 @@ export default class AppBuilder extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Grid container direction="column" style={{ height: "100%" }}>
-          <Grid
-            container
-            item
-            xs={12}
-            style={{ height: 64, flexBasis: "auto" }}
-          >
-            {this.renderHeader()}
-          </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            direction="row"
-            style={{
-              height: "calc(100% - 130px)",
-              flexBasis: "auto",
-              width: "100%",
-            }}
-          >
-            {this.renderBody()}
-          </Grid>
-        </Grid>
-      </React.Fragment>
+      <div className="flex h-full min-h-screen flex-col">
+        {this.renderHeader()}
+        <div
+          className={`flex min-h-0 flex-1 ${
+            this.state.open ? "flex-row overflow-hidden" : "flex-col"
+          }`}
+        >
+          {this.renderBody()}
+        </div>
+      </div>
     );
   }
 }

@@ -1,7 +1,39 @@
-.MuiFormControl-root {
-    left: 300;
-  }
-  .MuiFormControl-root {
-    left: 400;
-  }
-  
+.ab-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid rgba(155, 181, 190, 0.18);
+  background:
+    linear-gradient(120deg, rgba(26, 34, 40, 0.96), rgba(52, 67, 76, 0.92));
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -20px rgba(26, 34, 40, 0.65);
+}
+
+.ab-header-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.5rem 0.85rem;
+  color: #f4f7f8;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.ab-header-action:hover:not(:disabled) {
+  background: rgba(39, 163, 145, 0.28);
+  border-color: rgba(67, 191, 171, 0.45);
+}
+
+.ab-header-action:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.ab-header-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
