@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-ink: #1a2228;
+  --brand-tide: #27a391;
+  --brand-ember: #e8883f;
+  --surface: #f4f7f8;
+  --panel: #ffffff;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply m-0 bg-ink-50 font-sans text-ink-900 antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 12% -10%, rgba(39, 163, 145, 0.18), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 95% 0%, rgba(232, 136, 63, 0.12), transparent 50%),
+      linear-gradient(180deg, #eef4f5 0%, #f4f7f8 40%, #e8eef0 100%);
+    background-attachment: fixed;
+  }
+
+  code,
+  pre {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+  }
+}
+
+@layer components {
+  .ab-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .ab-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-tide-600 px-4 py-2.5 text-sm font-medium text-white shadow-soft transition duration-200 hover:bg-tide-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-2 active:bg-tide-700 disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .ab-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-transparent px-4 py-2.5 text-sm font-medium text-ink-700 transition duration-200 hover:bg-ink-100/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .ab-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white/80 px-4 py-2.5 text-sm font-medium text-ink-800 shadow-sm backdrop-blur transition duration-200 hover:border-tide-300 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-tide-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .ab-field {
+    @apply w-full rounded-xl border border-ink-200 bg-white/90 px-4 py-3 text-ink-900 shadow-sm outline-none transition placeholder:text-ink-400 focus:border-tide-400 focus:ring-2 focus:ring-tide-200;
+  }
+
+  .ab-panel {
+    @apply rounded-2xl border border-ink-200/80 bg-white/85 shadow-panel backdrop-blur-md;
+  }
+}

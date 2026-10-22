@@ -20,8 +20,10 @@
     "react-scripts": "^2.1.8"
   },
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-    "build": "react-scripts build",
+    "build:css": "tailwindcss -i ./src/styles/input.css -o ./src/styles/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./src/styles/input.css -o ./src/styles/tailwind.css --watch",
+    "start": "npm run build:css && concurrently -k -n css,app -c teal,cyan \"npm run watch:css\" \"NODE_OPTIONS=--openssl-legacy-provider react-scripts start\"",
+    "build": "npm run build:css && NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -39,5 +41,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
   }
 }
