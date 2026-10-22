@@ -101,22 +101,22 @@ export default function LandingPage(props) {
         <div className="landing-grid" />
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:items-center">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:items-center">
         <div>
           <div className="animate-fade-up max-w-2xl">
-            <p className="mb-4 font-mono text-xs uppercase tracking-[0.28em] text-tide-700">
+            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.28em] text-tide-700 sm:mb-4 sm:text-xs">
               Visual page studio
             </p>
-            <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-ink-950 sm:text-6xl md:text-7xl">
+            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink-950 sm:text-6xl md:text-7xl">
               Application Builder
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-600 sm:text-xl">
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-600 sm:mt-5 sm:text-xl">
               Name a project, drop in components, and ship an interactive page in minutes.
             </p>
           </div>
 
           <form
-            className="animate-fade-up mt-10 w-full max-w-xl"
+            className="animate-fade-up mt-8 w-full max-w-xl sm:mt-10"
             style={{ animationDelay: "120ms" }}
             onSubmit={(event) => {
               event.preventDefault();
@@ -140,27 +140,30 @@ export default function LandingPage(props) {
               onChange={handleAppname}
             />
 
-            <div className="mt-5 flex flex-wrap items-center gap-3">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <button
                 type="submit"
-                className="ab-btn-primary"
+                className="ab-btn-primary w-full sm:w-auto"
                 disabled={props.startAppButton}
               >
                 Open new application
               </button>
               <button
                 type="button"
-                className="ab-btn-ghost"
+                className="ab-btn-ghost w-full sm:w-auto"
                 onClick={refreshApps}
               >
                 Refresh list
               </button>
             </div>
+            <p className="mt-3 text-xs text-ink-500">
+              Tip: press Enter after naming a project to open it.
+            </p>
           </form>
         </div>
 
         <aside
-          className="animate-fade-up ab-panel p-5"
+          className="animate-fade-up ab-panel p-4 sm:p-5"
           style={{ animationDelay: "180ms" }}
         >
           <div className="mb-4 flex items-end justify-between gap-3">

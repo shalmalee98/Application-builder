@@ -56,3 +56,20 @@
   background: rgba(238, 251, 248, 0.9);
   transform: translateY(-1px);
 }
+
+.ab-recent-item:focus-visible {
+  outline: 2px solid #43bfab;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .landing-orb-a {
+    width: 14rem;
+    height: 14rem;
+  }
+
+  .landing-orb-b {
+    width: 11rem;
+    height: 11rem;
+  }
+}
