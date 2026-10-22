@@ -1,9 +1,9 @@
 .rotating-border {
   width: max-content;
-  background: linear-gradient(90deg, rgb(0, 0, 0) 30%, transparent 30%),
-    linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%),
-    linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%),
-    linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%);
+  background: linear-gradient(90deg, #27a391 30%, transparent 30%),
+    linear-gradient(90deg, #27a391 50%, transparent 50%),
+    linear-gradient(0deg, #27a391 50%, transparent 50%),
+    linear-gradient(0deg, #27a391 50%, transparent 50%);
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-size: 15px 1px, 15px 1px, 1px 15px, 1px 15px;
   padding: 1px;
@@ -19,21 +19,80 @@
   }
 }
 
-.form-container {
+.ab-canvas-shell {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(39, 163, 145, 0.08), transparent 40%),
+    linear-gradient(180deg, rgba(244, 247, 248, 0.9), rgba(232, 238, 240, 0.95));
+}
+
+.ab-canvas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 1px solid rgba(197, 213, 218, 0.8);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.55rem 0.75rem;
+  backdrop-filter: blur(8px);
+}
+
+.ab-canvas-chip {
+  border: 1px solid rgba(197, 213, 218, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #3b4e59;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ab-canvas-chip.is-active {
+  border-color: rgba(39, 163, 145, 0.45);
+  background: rgba(238, 251, 248, 0.95);
+  color: #1a6961;
+}
+
+.ab-canvas-zoom {
+  min-width: 3rem;
+  text-align: center;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: #527482;
+}
+
+.ab-canvas-stage {
+  flex: 1;
   overflow: auto;
+  padding: 1.25rem;
+}
+
+.form-container {
+  overflow: hidden;
   box-shadow: none;
 }
 
 .form-content {
-  background-image: linear-gradient(
-      rgba(150, 150, 150, 0.3) 1px,
-      transparent 2px
-    ),
-    linear-gradient(90deg, rgba(150, 150, 150, 0.3) 1px, 2px, transparent 2px),
-    linear-gradient(rgba(150, 150, 150, 0.3) 0.5px, transparent 1px),
-    linear-gradient(90deg, rgba(150, 150, 150, 0.3) 0.5px, transparent 1px);
+  position: relative;
+  border: 1px solid rgba(155, 181, 190, 0.55);
+  border-radius: 1rem;
+  box-shadow: 0 24px 50px -30px rgba(26, 34, 40, 0.45);
+}
+
+.form-content-grid {
+  background-image:
+    linear-gradient(rgba(109, 143, 156, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109, 143, 156, 0.18) 1px, transparent 1px),
+    linear-gradient(rgba(109, 143, 156, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109, 143, 156, 0.08) 1px, transparent 1px);
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
 }
 
 table, th, td {

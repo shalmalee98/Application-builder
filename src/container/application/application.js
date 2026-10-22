@@ -50,7 +50,21 @@ function runComponentScripts(data, eventName, domEvent) {
   });
 }
 
+const GRID_SIZE = 20;
+
+function snapValue(value, enabled) {
+  const number = parseFloat(value);
+  if (!enabled || Number.isNaN(number)) {
+    return number;
+  }
+  return Math.round(number / GRID_SIZE) * GRID_SIZE;
+}
+
 export default function Application(props) {
+  const [zoom, setZoom] = React.useState(1);
+  const [snapToGrid, setSnapToGrid] = React.useState(true);
+  const [showGrid, setShowGrid] = React.useState(true);
+
   const updateReturnData = (oldData, updatedData) => {
     let tmpcomp = Object.assign(oldData, {});
     tmpcomp.Rndprops = Object.assign(tmpcomp.Rndprops, updatedData);
@@ -60,7 +74,6 @@ export default function Application(props) {
   const ActionBarOpen = () => {
     props.setComponentBorder(null);
     props.onComponentSelect(props.formdata);
-    console.log(props.formdata);
   };
 
   const wrapRnD = (component, data) => {
@@ -70,15 +83,23 @@ export default function Application(props) {
         size={{ width: data.Rndprops.width, height: data.Rndprops.height }}
         position={{ x: data.Rndprops.x, y: data.Rndprops.y }}
         bounds="parent"
+        dragGrid={snapToGrid ? [GRID_SIZE, GRID_SIZE] : [1, 1]}
+        resizeGrid={snapToGrid ? [GRID_SIZE, GRID_SIZE] : [1, 1]}
+        scale={zoom}
         onDragStop={(e, d) => {
-          const newData = { x: d.x, y: d.y, id: data.id };
+          const newData = {
+            x: snapValue(d.x, snapToGrid),
+            y: snapValue(d.y, snapToGrid),
+            id: data.id,
+          };
           updateReturnData(data, newData);
         }}
         onResizeStop={(e, direction, ref, delta, position) => {
           const newData = {
-            width: ref.style.width,
-            height: ref.style.height,
-            ...position,
+            width: snapValue(ref.offsetWidth, snapToGrid),
+            height: snapValue(ref.offsetHeight, snapToGrid),
+            x: snapValue(position.x, snapToGrid),
+            y: snapValue(position.y, snapToGrid),
             id: data.id,
           };
           updateReturnData(data, newData);
@@ -221,24 +242,61 @@ export default function Application(props) {
   };
 
   return (
-    <div
-      className="form-container"
-      style={{ height: "100%", width: "100%", position: "absolute" }}
-      onClick={ActionBarOpen}
-    >
-      <div
-        id="form-content"
-        className="form-content"
-        style={{
-          width: props.formdata.width,
-          height: props.formdata.height,
-          backgroundColor: props.formdata.colour,
-          border: "1px solid rgba(0, 0, 0, 0.2)",
-          borderRadius: 4,
-        }}
-        onClick={ActionBarOpen}
-      >
-        {renderComponent()}
+    <div className="form-container ab-canvas-shell" onClick={ActionBarOpen}>
+      <div className="ab-canvas-toolbar" onClick={(event) => event.stopPropagation()}>
+        <button
+          type="button"
+          className="ab-canvas-chip"
+          onClick={() => setZoom((value) => Math.max(0.5, Number((value - 0.1).toFixed(1))))}
+        >
+          −
+        </button>
+        <span className="ab-canvas-zoom">{Math.round(zoom * 100)}%</span>
+        <button
+          type="button"
+          className="ab-canvas-chip"
+          onClick={() => setZoom((value) => Math.min(1.5, Number((value + 0.1).toFixed(1))))}
+        >
+          +
+        </button>
+        <button
+          type="button"
+          className="ab-canvas-chip"
+          onClick={() => setZoom(1)}
+        >
+          Reset
+        </button>
+        <button
+          type="button"
+          className={`ab-canvas-chip ${showGrid ? "is-active" : ""}`}
+          onClick={() => setShowGrid((value) => !value)}
+        >
+          Grid
+        </button>
+        <button
+          type="button"
+          className={`ab-canvas-chip ${snapToGrid ? "is-active" : ""}`}
+          onClick={() => setSnapToGrid((value) => !value)}
+        >
+          Snap
+        </button>
+      </div>
+
+      <div className="ab-canvas-stage">
+        <div
+          id="form-content"
+          className={`form-content ${showGrid ? "form-content-grid" : ""}`}
+          style={{
+            width: props.formdata.width,
+            height: props.formdata.height,
+            backgroundColor: props.formdata.colour,
+            transform: `scale(${zoom})`,
+            transformOrigin: "top left",
+          }}
+          onClick={ActionBarOpen}
+        >
+          {renderComponent()}
+        </div>
       </div>
     </div>
   );
