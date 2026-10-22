@@ -36,3 +36,23 @@
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 70% 60% at 40% 40%, black, transparent);
 }
+
+.ab-recent-item {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.2rem;
+  border: 1px solid rgba(197, 213, 218, 0.75);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.8rem 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.ab-recent-item:hover {
+  border-color: rgba(39, 163, 145, 0.45);
+  background: rgba(238, 251, 248, 0.9);
+  transform: translateY(-1px);
+}
