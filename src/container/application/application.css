@@ -73,6 +73,28 @@
   padding: 1.25rem;
 }
 
+.ab-canvas-frame {
+  position: relative;
+  display: inline-block;
+  min-width: min-content;
+}
+
+.ab-canvas-empty {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+  padding: 2rem;
+  background:
+    linear-gradient(180deg, rgba(244, 247, 248, 0.18), rgba(244, 247, 248, 0.42));
+}
+
 .form-container {
   overflow: hidden;
   box-shadow: none;
@@ -82,7 +104,16 @@
   position: relative;
   border: 1px solid rgba(155, 181, 190, 0.55);
   border-radius: 1rem;
-  box-shadow: 0 24px 50px -30px rgba(26, 34, 40, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.55) inset,
+    0 24px 50px -30px rgba(26, 34, 40, 0.45);
+  transition: box-shadow 180ms ease;
+}
+
+.form-content:hover {
+  box-shadow:
+    0 0 0 1px rgba(39, 163, 145, 0.2) inset,
+    0 28px 55px -28px rgba(26, 34, 40, 0.5);
 }
 
 .form-content-grid {

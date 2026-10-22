@@ -1,6 +1,5 @@
 .App {
   min-height: 100% !important;
-  text-align: center;
   overflow: hidden !important;
 }
 
@@ -14,24 +13,29 @@
   align-self: center;
   justify-content: center;
 }
+
 .form {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.application{
+.application {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.application-container{
+.application-container {
   height: 100%;
-  margin: 20px;
   position: relative;
+  min-width: 0;
+  flex: 1;
+  margin: 0;
+  background: transparent;
 }
-.canvas{
+
+.canvas {
   height: 100%;
   width: 100%;
 }

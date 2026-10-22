@@ -283,19 +283,39 @@ export default function Application(props) {
       </div>
 
       <div className="ab-canvas-stage">
-        <div
-          id="form-content"
-          className={`form-content ${showGrid ? "form-content-grid" : ""}`}
-          style={{
-            width: props.formdata.width,
-            height: props.formdata.height,
-            backgroundColor: props.formdata.colour,
-            transform: `scale(${zoom})`,
-            transformOrigin: "top left",
-          }}
-          onClick={ActionBarOpen}
-        >
-          {renderComponent()}
+        <div className="ab-canvas-frame">
+          <div
+            id="form-content"
+            className={`form-content ${showGrid ? "form-content-grid" : ""}`}
+            style={{
+              width: props.formdata.width,
+              height: props.formdata.height,
+              backgroundColor: props.formdata.colour,
+              transform: `scale(${zoom})`,
+              transformOrigin: "top left",
+            }}
+            onClick={ActionBarOpen}
+          >
+            {renderComponent()}
+          </div>
+          {(!props.appComponent || props.appComponent.length === 0) && (
+            <div
+              className="ab-canvas-empty remove-from-html"
+              style={{
+                width: props.formdata.width * zoom,
+                height: props.formdata.height * zoom,
+              }}
+              onClick={ActionBarOpen}
+            >
+              <p className="font-display text-2xl font-semibold text-ink-800">
+                Blank canvas
+              </p>
+              <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink-500">
+                Pick a component from the left palette, then drag it into place.
+                Click the page to edit canvas size and color.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
