@@ -325,23 +325,10 @@ export default class AppBuilder extends React.Component {
     );
   };
 
-  calculateWidthForApplication = () => {
-    let width = 155;
-    if (this.state.openSideNav) {
-      width += 120;
-    }
-    if (this.state.openActionBar) {
-      width += 190;
-    }
-    return width;
-  };
-
   renderApplication = () => {
-    const appWidth = this.calculateWidthForApplication();
     return (
       <div
-        className="application-container"
-        style={{ width: `calc(100% - ${appWidth}px)` }}
+        className="application-container min-w-0 flex-1"
         ref={this.appContainer}
       >
         <Application

@@ -1,14 +1,9 @@
 import React from "react";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import "../action-bar/action-bar.css";
-import { TextField, ListItem, Button } from "@material-ui/core";
 import ButtonAction from "../../components/button/buttonAction";
 import TextboxAction from "../../components/textbox/textboxAction";
 import RadiobuttonAction from "../../components/radiobutton/radiobuttonAction";
@@ -53,67 +48,67 @@ export default class ActionBar extends React.Component {
       }
       this.props.updateAppComponent(clone);
     };
-    const renderComponentParams = () => {
-      return (
-        <div>
-          <ListItem>
-            <TextField
-              label="ID"
-              value={this.props.ActionbarData.id}
-            ></TextField>
-          </ListItem>
-          <ListItem>
-            <TextField
-              label="Height"
-              value={this.props.ActionbarData.Rndprops.height}
-              onChange={(event) => {
-                handleChange("height", event);
-              }}
-            ></TextField>
-          </ListItem>
-          <ListItem>
-            <TextField
-              label="Width"
-              value={this.props.ActionbarData.Rndprops.width}
-              onChange={(event) => {
-                handleChange("width", event);
-              }}
-            ></TextField>
-          </ListItem>
 
-          <ListItem style={{ fontSize: 13, color: "grey" }}>
-            Position :
-          </ListItem>
-          <ListItem>
-            <TextField
-              label="x :"
-              value={this.props.ActionbarData.Rndprops.x}
-              onChange={(event) => {
-                handleChange("x", event);
-              }}
-            ></TextField>
-          </ListItem>
-          <ListItem>
-            <TextField
-              label="y :"
-              value={this.props.ActionbarData.Rndprops.y}
-              onChange={(event) => {
-                handleChange("y", event);
-              }}
-            ></TextField>
-          </ListItem>
-          <ListItem style={{ justifyContent: "center" }}>
-            <Button
-              variant="outlined"
-              onClick={() => handleComponentDelete(this.props.ActionbarData.id)}
-            >
-              <DeleteIcon></DeleteIcon>
-            </Button>
-          </ListItem>
+    const renderField = (label, value, type, readOnly) => (
+      <label className="ab-inspector-field">
+        <span>{label}</span>
+        <input
+          className="ab-field !rounded-lg !px-3 !py-2 !text-sm"
+          value={value == null ? "" : value}
+          readOnly={!!readOnly}
+          onChange={
+            readOnly
+              ? undefined
+              : (event) => {
+                  handleChange(type, event);
+                }
+          }
+        />
+      </label>
+    );
+
+    const renderComponentParams = () => {
+      if (!this.props.ActionbarData || !this.props.ActionbarData.Rndprops) {
+        return null;
+      }
+      return (
+        <div className="ab-inspector-section">
+          <p className="ab-inspector-heading">Layout</p>
+          {renderField("ID", this.props.ActionbarData.id, "id", true)}
+          {renderField(
+            "Height",
+            this.props.ActionbarData.Rndprops.height,
+            "height"
+          )}
+          {renderField(
+            "Width",
+            this.props.ActionbarData.Rndprops.width,
+            "width"
+          )}
+          {renderField("X", this.props.ActionbarData.Rndprops.x, "x")}
+          {renderField("Y", this.props.ActionbarData.Rndprops.y, "y")}
+          <button
+            type="button"
+            className="ab-btn-secondary mt-2 w-full text-ember-600 hover:border-ember-400"
+            onClick={() =>
+              handleComponentDelete(this.props.ActionbarData.id)
+            }
+          >
+            <DeleteIcon fontSize="small" />
+            Delete
+          </button>
         </div>
       );
     };
+
     const renderActionComponent = (type) => {
+      if (!type) {
+        return (
+          <div className="px-4 py-8 text-center text-sm text-ink-500">
+            Select a component on the canvas to edit its properties.
+          </div>
+        );
+      }
       if (type === "Form") {
         return (
           <FormAction
@@ -121,223 +116,104 @@ export default class ActionBar extends React.Component {
             setFormdata={this.props.setFormdata}
             ActionbarData={this.props.ActionbarData}
             updateAppComponent={this.props.updateAppComponent}
-          ></FormAction>
-        );
-      } else {
-        if (type === "Button") {
-          return (
-            <div>
-              <ButtonAction
-                handleComponentDelete={this.props.handleComponentDelete}
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></ButtonAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Input Box") {
-          return (
-            <div>
-              <TextboxAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></TextboxAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Multiline Input Box") {
-          return (
-            <div>
-              <TextAreaAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></TextAreaAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Radiogroup") {
-          return (
-            <div>
-              <RadiobuttonAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></RadiobuttonAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Label") {
-          return (
-            <div>
-              <LabelAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></LabelAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Checkbox") {
-          return (
-            <div>
-              <CheckboxAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></CheckboxAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Link") {
-          return (
-            <div>
-              <LinkAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></LinkAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Linechart") {
-          return (
-            <div>
-              <LineChartAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              ></LineChartAction>
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Barchart") {
-          return (
-            <div>
-              <BarChartAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              />
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Piechart") {
-          return (
-            <div>
-              <PieChartAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              />
-              {renderComponentParams()}
-            </div>
-          );
-        }
-        if (type === "Geochart") {
-          return (
-            <div>
-              <GeoChartAction
-                ActionbarData={this.props.ActionbarData}
-                updateAppComponent={this.props.updateAppComponent}
-              />
-              {renderComponentParams()}
-            </div>
-          );
-        }
-      }
-      if (type === "Tablechart") {
-        return (
-          <div>
-            <TableChartAction
-              ActionbarData={this.props.ActionbarData}
-              updateAppComponent={this.props.updateAppComponent}
-            />
-            {renderComponentParams()}
-          </div>
+          />
         );
       }
-      if (type === "Image") {
-        return (
-          <div>
-            <ImageAction
-              ActionbarData={this.props.ActionbarData}
-              updateAppComponent={this.props.updateAppComponent}
-            />
-            {renderComponentParams()}
-          </div>
+      const common = {
+        ActionbarData: this.props.ActionbarData,
+        updateAppComponent: this.props.updateAppComponent,
+      };
+      let editor = null;
+      if (type === "Button") {
+        editor = (
+          <ButtonAction
+            handleComponentDelete={this.props.handleComponentDelete}
+            {...common}
+          />
         );
+      } else if (type === "Input Box") {
+        editor = <TextboxAction {...common} />;
+      } else if (type === "Multiline Input Box") {
+        editor = <TextAreaAction {...common} />;
+      } else if (type === "Radiogroup") {
+        editor = <RadiobuttonAction {...common} />;
+      } else if (type === "Label") {
+        editor = <LabelAction {...common} />;
+      } else if (type === "Checkbox") {
+        editor = <CheckboxAction {...common} />;
+      } else if (type === "Link") {
+        editor = <LinkAction {...common} />;
+      } else if (type === "Linechart") {
+        editor = <LineChartAction {...common} />;
+      } else if (type === "Barchart") {
+        editor = <BarChartAction {...common} />;
+      } else if (type === "Piechart") {
+        editor = <PieChartAction {...common} />;
+      } else if (type === "Geochart") {
+        editor = <GeoChartAction {...common} />;
+      } else if (type === "Tablechart") {
+        editor = <TableChartAction {...common} />;
+      } else if (type === "Image") {
+        editor = <ImageAction {...common} />;
+      } else if (type === "Dropdown") {
+        editor = <DropdownAction {...common} />;
       }
-      if (type === "Dropdown") {
-        return (
-          <div>
-            <DropdownAction
-              ActionbarData={this.props.ActionbarData}
-              updateAppComponent={this.props.updateAppComponent}
-            />
-            {renderComponentParams()}
-          </div>
-        );
-      }
+
+      return (
+        <div className="ab-inspector-body">
+          {editor}
+          {renderComponentParams()}
+        </div>
+      );
     };
 
     return (
-      <Drawer
-        variant="persistent"
-        open={true}
-        overflow="auto"
-        className={
+      <aside
+        className={`ab-action-bar ${
           this.props.openActionBar
-            ? "drawer-open-actionbar"
-            : "drawer-close-actionbar"
-        }
-        classes={{
-          paper: this.props.openActionBar
-            ? "drawer-open-actionbar"
-            : "drawer-close-actionbar",
-        }}
-        anchor="right"
+            ? "ab-action-bar-open"
+            : "ab-action-bar-closed"
+        }`}
       >
-        <div>
-          {!this.props.openActionBar ? (
-            <IconButton
-              style={{ justifyContent: "flex-start", marginLeft: 4 }}
-              onClick={handleDrawerOpen}
-            >
-              <MenuIcon />
-            </IconButton>
-          ) : null}
+        <div className="flex items-center justify-between border-b border-ink-100 px-2 py-2">
           {this.props.openActionBar ? (
-            <IconButton
-              style={{ justifyContent: "flex-start", marginLeft: 4 }}
-              onClick={handleDrawerClose}
-            >
-              <ChevronRightIcon />
-            </IconButton>
-          ) : null}
+            <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-500">
+              Inspector
+            </p>
+          ) : (
+            <span className="sr-only">Inspector</span>
+          )}
+          <button
+            type="button"
+            className="ab-icon-btn"
+            onClick={
+              this.props.openActionBar ? handleDrawerClose : handleDrawerOpen
+            }
+            aria-label={
+              this.props.openActionBar
+                ? "Collapse inspector"
+                : "Expand inspector"
+            }
+          >
+            {this.props.openActionBar ? <ChevronRightIcon /> : <MenuIcon />}
+          </button>
         </div>
 
-        <Divider />
         {this.props.openActionBar ? (
-          <ListItem
-            style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}
-          >
-            {this.props.ActionbarData.type}
-          </ListItem>
+          <div className="ab-action-bar-scroll">
+            {this.props.ActionbarData && this.props.ActionbarData.type ? (
+              <div className="border-b border-ink-100 px-4 py-3">
+                <p className="font-display text-xl font-semibold text-ink-900">
+                  {this.props.ActionbarData.type}
+                </p>
+              </div>
+            ) : null}
+            {renderActionComponent(
+              this.props.ActionbarData && this.props.ActionbarData.type
+            )}
+          </div>
         ) : null}
-        <Divider />
-        {this.props.openActionBar ? (
-          <List>{renderActionComponent(this.props.ActionbarData.type)}</List>
-        ) : null}
-        {this.props.openActionBar ? (
-          <List>
-            <ListItem>
-              <div style={{ height: 80 }} />
-            </ListItem>
-          </List>
-        ) : null}
-      </Drawer>
+      </aside>
     );
   }
 }

@@ -1,34 +1,69 @@
-.menuButton {
-    margin-left: 20;
-  }
-  .menuButtonHidden {
-    display: "none";
-  }
-  .deleteButton {
-    justify-content: center;
-    align-items: center;
-  }
-  .drawerPaper-Actionbar {
-    margin-top: 64;
-    position: relative;
-    white-space: "nowrap";
-    width: 250px;
-    overflow: "scroll";
-    height: "100%";
-  }
-  .drawerPaperClose {
-    overflow-x: "hidden";
-  }
-  
-  .drawer-open-actionbar {
-    width: 250px;
-  }
-  
-  .drawer-close-actionbar {
-    width: 56px;
-  }
-  
-  .action-bar-container .MuiDrawer-paper {
-    top: 64px !important;
-  }
-  
+.ab-action-bar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-left: 1px solid rgba(197, 213, 218, 0.9);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  transition: width 180ms ease;
+}
+
+.ab-action-bar-open {
+  width: 17rem;
+  min-width: 17rem;
+}
+
+.ab-action-bar-closed {
+  width: 3.75rem;
+  min-width: 3.75rem;
+}
+
+.ab-action-bar-scroll {
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.ab-inspector-body {
+  padding: 0.75rem 0.85rem 1rem;
+}
+
+.ab-inspector-section {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(227, 235, 237, 0.95);
+}
+
+.ab-inspector-heading {
+  margin: 0 0 0.65rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6d8f9c;
+}
+
+.ab-inspector-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #527482;
+}
+
+.action-bar-container {
+  height: 100%;
+  display: flex;
+}
+
+/* Soften nested Material controls inside the inspector */
+.ab-action-bar .MuiListItem-root {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.ab-action-bar .MuiFormControl-root,
+.ab-action-bar .MuiTextField-root {
+  width: 100%;
+}

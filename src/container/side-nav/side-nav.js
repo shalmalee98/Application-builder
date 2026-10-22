@@ -1,12 +1,6 @@
 import React from "react";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
 import ShowChartOutlinedIcon from "@material-ui/icons/ShowChartOutlined";
 import InsertChartOutlinedIcon from "@material-ui/icons/InsertChartOutlined";
@@ -38,6 +32,26 @@ import { defaultprops as anchortagProps } from "../../components/anchor_tag/anch
 import { defaultprops as imageProps } from "../../components/image/image";
 import { defaultprops as dropdownProps } from "../../components/dropdown/dropdown";
 
+const BASIC_ITEMS = [
+  { type: "button", label: "Button", Icon: Crop54RoundedIcon },
+  { type: "textbox", label: "Input", Icon: TextFieldsIcon },
+  { type: "textarea", label: "Text area", Icon: ViewHeadlineIcon },
+  { type: "label", label: "Label", Icon: LabelOutlinedIcon },
+  { type: "radiogroup", label: "Radio", Icon: RadioButtonCheckedOutlinedIcon },
+  { type: "checkbox", label: "Checkbox", Icon: CheckBoxIcon },
+  { type: "dropdown", label: "Dropdown", Icon: ArrowDropDownCircleIcon },
+  { type: "link", label: "Link", Icon: LinkIcon },
+  { type: "image", label: "Image", Icon: ImageIcon },
+];
+
+const CHART_ITEMS = [
+  { type: "tablechart", label: "Table", Icon: TableChartIcon },
+  { type: "linechart", label: "Line", Icon: ShowChartOutlinedIcon },
+  { type: "barchart", label: "Bar", Icon: InsertChartOutlinedIcon },
+  { type: "piechart", label: "Pie", Icon: PieChartIcon },
+  { type: "geochart", label: "Geo", Icon: MapIcon },
+];
+
 export default function SideNav(props) {
   const handleDrawerClose = () => {
     props.setOpenSideNav(false);
@@ -47,224 +61,82 @@ export default function SideNav(props) {
   };
 
   const handleComponentSelect = (type) => {
-    if (type === "button") {
-      props.handleComponentClick(buttonProps());
-    } else if (type === "textbox") {
-      props.handleComponentClick(textboxProps());
-    } else if (type === "textarea") {
-      props.handleComponentClick(textareaProps());
-    } else if (type === "linechart") {
-      props.handleComponentClick(linechartProps());
-    } else if (type === "barchart") {
-      props.handleComponentClick(barchartProps());
-    } else if (type === "piechart") {
-      props.handleComponentClick(piechartProps());
-    } else if (type === "image") {
-      props.handleComponentClick(imageProps());
-    } else if (type === "geochart") {
-      props.handleComponentClick(geochartProps());
-    } else if (type === "radiogroup") {
-      props.handleComponentClick(radiogroupProps());
-    } else if (type === "label") {
-      props.handleComponentClick(labelProps());
-    } else if (type === "checkbox") {
-      props.handleComponentClick(checkboxProps());
-    } else if (type === "link") {
-      props.handleComponentClick(anchortagProps());
-    } else if (type === "tablechart") {
-      props.handleComponentClick(tablechartProps());
-    } else if (type === "dropdown") {
-      props.handleComponentClick(dropdownProps());
+    const factories = {
+      button: buttonProps,
+      textbox: textboxProps,
+      textarea: textareaProps,
+      linechart: linechartProps,
+      barchart: barchartProps,
+      piechart: piechartProps,
+      image: imageProps,
+      geochart: geochartProps,
+      radiogroup: radiogroupProps,
+      label: labelProps,
+      checkbox: checkboxProps,
+      link: anchortagProps,
+      tablechart: tablechartProps,
+      dropdown: dropdownProps,
+    };
+    const factory = factories[type];
+    if (factory) {
+      props.handleComponentClick(factory());
     }
   };
+
+  const renderItem = (item) => {
+    const Icon = item.Icon;
+    return (
+      <button
+        key={item.type}
+        type="button"
+        className="ab-palette-item"
+        onClick={() => handleComponentSelect(item.type)}
+        title={item.label}
+      >
+        <Icon fontSize="small" />
+        {props.openSideNav ? <span>{item.label}</span> : null}
+      </button>
+    );
+  };
+
   return (
-    <Drawer
-      variant="persistent"
-      open={true}
-      anchor="left"
-      style={{ overflow: "hidden" }}
-      className={props.openSideNav ? "drawer-open" : "drawer-close"}
-      classes={{
-        paper: props.openSideNav ? "drawer-open" : "drawer-close",
-      }}
+    <aside
+      className={`ab-side-nav ${
+        props.openSideNav ? "ab-side-nav-open" : "ab-side-nav-closed"
+      }`}
     >
-      <div>
-        {!props.openSideNav ? (
-          <IconButton
-            style={{ justifyContent: "flex-end", marginLeft: 4 }}
-            onClick={handleDrawerOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-        ) : null}
+      <div className="flex items-center justify-between border-b border-ink-100 px-2 py-2">
         {props.openSideNav ? (
-          <IconButton
-            style={{ justifyContent: "flex-end" }}
-            onClick={handleDrawerClose}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-        ) : null}
+          <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-500">
+            Components
+          </p>
+        ) : (
+          <span className="sr-only">Components</span>
+        )}
+        <button
+          type="button"
+          className="ab-icon-btn"
+          onClick={props.openSideNav ? handleDrawerClose : handleDrawerOpen}
+          aria-label={props.openSideNav ? "Collapse palette" : "Expand palette"}
+        >
+          {props.openSideNav ? <ChevronLeftIcon /> : <MenuIcon />}
+        </button>
       </div>
-      <Divider />
-      <Divider />
-      <List>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("button");
-          }}
-        >
-          <ListItemIcon>
-            <Crop54RoundedIcon />
-          </ListItemIcon>
-          Button
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("textbox");
-          }}
-        >
-          <ListItemIcon>
-            <TextFieldsIcon />
-          </ListItemIcon>
-          Input Box
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("textarea");
-          }}
-        >
-          <ListItemIcon>
-            <ViewHeadlineIcon />
-          </ListItemIcon>
-          Multiline Input Box
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("label");
-          }}
-        >
-          <ListItemIcon>
-            <LabelOutlinedIcon />
-          </ListItemIcon>
-          Label
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("radiogroup");
-          }}
-        >
-          <ListItemIcon>
-            <RadioButtonCheckedOutlinedIcon />
-          </ListItemIcon>
-          Radio Group
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("checkbox");
-          }}
-        >
-          <ListItemIcon>
-            <CheckBoxIcon />
-          </ListItemIcon>
-          CheckBox
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("dropdown");
-          }}
-        >
-          <ListItemIcon>
-            <ArrowDropDownCircleIcon />
-          </ListItemIcon>
-          Dropdown
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("link");
-          }}
-        >
-          <ListItemIcon>
-            <LinkIcon />
-          </ListItemIcon>
-          Link
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("image");
-          }}
-        >
-          <ListItemIcon>
-            <ImageIcon />
-          </ListItemIcon>
-          Image
-        </ListItem>
-        <Divider></Divider>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("tablechart");
-          }}
-        >
-          <ListItemIcon>
-            <TableChartIcon />
-          </ListItemIcon>
-          Table
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("linechart");
-          }}
-        >
-          <ListItemIcon>
-            <ShowChartOutlinedIcon />
-          </ListItemIcon>
-          Line Chart
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("barchart");
-          }}
-        >
-          <ListItemIcon>
-            <InsertChartOutlinedIcon />
-          </ListItemIcon>
-          Bar Chart
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("piechart");
-          }}
-        >
-          <ListItemIcon>
-            <PieChartIcon />
-          </ListItemIcon>
-          Pie Chart
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            handleComponentSelect("geochart");
-          }}
-        >
-          <ListItemIcon>
-            <MapIcon />
-          </ListItemIcon>
-          Geo Chart
-        </ListItem>
-      </List>
-    </Drawer>
+
+      <div className="ab-side-nav-scroll">
+        <div className="ab-palette-group">
+          {props.openSideNav ? (
+            <p className="ab-palette-label">Basics</p>
+          ) : null}
+          {BASIC_ITEMS.map(renderItem)}
+        </div>
+        <div className="ab-palette-group">
+          {props.openSideNav ? (
+            <p className="ab-palette-label">Data</p>
+          ) : null}
+          {CHART_ITEMS.map(renderItem)}
+        </div>
+      </div>
+    </aside>
   );
 }
