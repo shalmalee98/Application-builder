@@ -1,20 +1,25 @@
 import axios from "axios";
+import { notifyError, notifySuccess } from "../components/toast/notify";
+
 const URL = "http://localhost:8080";
 export const PROJECTS_PATH =
   "/Users/shalmaleeshenolikar/Documents/Application-builder/build/Projects/";
 
 export function save_file(data) {
-  axios
+  return axios
     .post(`${URL}/save`, data, {
       params: {
         path: PROJECTS_PATH,
       },
     })
     .then((response) => {
-      alert('Your application "' + data.name + '" is ' + response.data);
+      notifySuccess(
+        'Your application "' + data.name + '" is ' + response.data
+      );
+      return response.data;
     })
-    .catch(function (error) {
-      alert("This is an error in saving whole application");
+    .catch(function () {
+      notifyError("Could not save the application");
     });
 }
 export function getApplicationList() {
@@ -24,7 +29,9 @@ export function getApplicationList() {
       return response.data;
     })
     .catch(function (error) {
-      alert(error);
+      notifyError(
+        (error && error.message) || "Could not load application list"
+      );
     });
 }
 
@@ -36,11 +43,9 @@ export function getApplicationJson(appName) {
       },
     })
     .then((response) => {
-      console.log(response.data);
-      console.log(response.data.components);
       return response.data;
     })
-    .catch(function (error) {
-      alert("Cannot retrieve json data");
+    .catch(function () {
+      notifyError("Cannot retrieve application data");
     });
 }

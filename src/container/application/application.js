@@ -15,6 +15,7 @@ import CheckBox from "../../components/checkbox/checkbox";
 import Link from "../../components/anchor_tag/anchor_tag";
 import Image from "../../components/image/image";
 import DropDown from "../../components/dropdown/dropdown";
+import { notifyError } from "../../components/toast/notify";
 import "./application.css";
 
 function eventScriptCode(code) {
@@ -44,7 +45,7 @@ function runComponentScripts(data, eventName, domEvent) {
       const target = document.getElementById(entry.id || data.id);
       fn.call(target || domEvent.currentTarget, domEvent);
     } catch (err) {
-      alert(err.message || err);
+      notifyError(err.message || String(err));
     }
   });
 }

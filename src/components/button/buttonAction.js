@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { SketchPicker } from "react-color";
 import PaletteIcon from "@material-ui/icons/Palette";
+import { notifyError } from "../../components/toast/notify";
 
 export default function ButtonAction(props) {
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -50,11 +51,11 @@ export default function ButtonAction(props) {
       .join("\n")
       .trim();
     if (!eventtype) {
-      alert("Select an event");
+      notifyError("Select an event");
       return;
     }
     if (!code) {
-      alert("Enter a script for this event");
+      notifyError("Enter a script for this event");
       return;
     }
     if (!clone.script) {

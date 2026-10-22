@@ -8,6 +8,7 @@ import "./landing-page.css";
 
 import { getApplicationJson } from "../../services/services";
 import { getApplicationList } from "../../services/services";
+import { notifyError, notifyInfo } from "../../components/toast/notify";
 
 export default function LandingPage(props) {
   const [apps, setApps] = React.useState({});
@@ -22,7 +23,7 @@ export default function LandingPage(props) {
       const names =
         data && typeof data === "object" ? Object.keys(data) : [];
       if (names.indexOf(props.appName) !== -1) {
-        alert("This application already exists");
+        notifyInfo("This application already exists — opening it instead");
         handleListItemClick(props.appName);
         return;
       }
@@ -44,7 +45,7 @@ export default function LandingPage(props) {
         setApps(data);
         setDialogOpen(true);
       } else {
-        alert("No existing applications!");
+        notifyError("No existing applications yet");
       }
     });
   };

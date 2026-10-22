@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './styles/tailwind.css';
 import './index.css';
 import App from './App';
+import { ToastProvider } from './components/toast/toast';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ToastProvider>
+      <App />
+    </ToastProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
