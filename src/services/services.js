@@ -1,12 +1,13 @@
 import axios from "axios";
 const URL = "http://localhost:8080";
+export const PROJECTS_PATH =
+  "/Users/shalmaleeshenolikar/Documents/Application-builder/build/Projects/";
 
 export function save_file(data) {
   axios
     .post(`${URL}/save`, data, {
       params: {
-        path:
-          "C://Users//shalm//Desktop//ApplicationBuilder//applicationbuilder//build//Projects//",
+        path: PROJECTS_PATH,
       },
     })
     .then((response) => {

@@ -21,21 +21,14 @@ export default function LandingPage(props) {
   }
   const openApp = () => {
     getApplicationList().then((data) => {
-      if (data === undefined) {
-        props.openApplication();
-      } else if (Object.keys(data).length !== 0) {
-        Object.keys(data).map((key) => {
-          arr.push(key);
-        });
-        for(let i=0; i<arr.length; i++){
-          if(arr[i] === props.appName){
-            alert("This application already exists");
-            handleListItemClick(arr[i]);
-          } else {
-            props.openApplication();
-          }
-        }
-      }  
+      const names =
+        data && typeof data === "object" ? Object.keys(data) : [];
+      if (names.indexOf(props.appName) !== -1) {
+        alert("This application already exists");
+        handleListItemClick(props.appName);
+        return;
+      }
+      props.openApplication();
     });
   };
   const handleDialogClose = () => {
@@ -92,7 +85,14 @@ export default function LandingPage(props) {
   };
 
   return (
-    <form>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (!props.startAppButton) {
+          openApp();
+        }
+      }}
+    >
       <h1 align="center">NEW APPLICATION</h1>
       <br></br>
       <TextField

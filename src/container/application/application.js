@@ -17,6 +17,38 @@ import Image from "../../components/image/image";
 import DropDown from "../../components/dropdown/dropdown";
 import "./application.css";
 
+function eventScriptCode(code) {
+  if (!code) {
+    return "";
+  }
+  return code
+    .split("\n")
+    .filter((line) => line.trim() !== "//Add Code")
+    .join("\n")
+    .trim();
+}
+
+function runComponentScripts(data, eventName, domEvent) {
+  (data.script || []).forEach((entry) => {
+    if (entry.event !== eventName) {
+      return;
+    }
+    const code = eventScriptCode(entry.code);
+    if (!code) {
+      return;
+    }
+    try {
+      // The builder runs the script the user typed for this component.
+      // eslint-disable-next-line no-new-func
+      const fn = new Function("event", code);
+      const target = document.getElementById(entry.id || data.id);
+      fn.call(target || domEvent.currentTarget, domEvent);
+    } catch (err) {
+      alert(err.message || err);
+    }
+  });
+}
+
 export default function Application(props) {
   const updateReturnData = (oldData, updatedData) => {
     let tmpcomp = Object.assign(oldData, {});
@@ -60,10 +92,17 @@ export default function Application(props) {
           <div
             style={{ width: "100%", height: "100%" }}
             onClick={(e) => {
+              runComponentScripts(data, "click", e);
               props.setComponentBorder(data.id);
               props.onComponentSelect(data);
               e.preventDefault();
               e.stopPropagation();
+            }}
+            onDoubleClick={(e) => {
+              runComponentScripts(data, "dblclick", e);
+            }}
+            onMouseOver={(e) => {
+              runComponentScripts(data, "mouseover", e);
             }}
           >
             {component}

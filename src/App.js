@@ -6,7 +6,7 @@ import ActionBar from "./container/action-bar/action-bar";
 import LandingPage from "./container/landing-page/landing-page";
 import Grid from "@material-ui/core/Grid";
 import "./App.css";
-import { save_file } from "./services/services";
+import { PROJECTS_PATH, save_file } from "./services/services";
 
 export default class AppBuilder extends React.Component {
   constructor(props) {
@@ -159,8 +159,7 @@ export default class AppBuilder extends React.Component {
     this.setJsonForm(form);
     const app = {
       name: this.state.appName,
-      path:
-        "C://Users//sshenolikar//Desktop//React App//applicationbuilder//build//Projects//",
+      path: PROJECTS_PATH,
       Pages: [
         {
           type: "Json",
@@ -186,27 +185,36 @@ export default class AppBuilder extends React.Component {
     this.setActionbarData(this.state.formdata);
   };
 
+  eventScriptCode = (code) => {
+    if (!code) {
+      return "";
+    }
+    return code
+      .split("\n")
+      .filter((line) => line.trim() !== "//Add Code")
+      .join("\n")
+      .trim();
+  };
+
   createScriptForEvents = () => {
-    const componentList = Object.assign(this.state.appComponent);
+    const componentList = this.state.appComponent || [];
     let output = "";
 
-    for (let i = 0; i < componentList.length; i++) {
-      const comp = componentList[i];
-      if (comp.script !== undefined && comp.script.length > 0) {
-        // eslint-disable-next-line no-loop-func
-        comp.script.forEach((element, index) => {
-          const { event, code, id } = element;
-          if(!code.includes("//Add Code")) {
-            output += `\n\n document.getElementById('${id}').addEventListener("${event}", function(){
-              ${code}
-            }); \n\n`;
-          }
-          else if (code.includes("//Add Code")) {
-            let arr = comp.script.splice(index, 1);
-          } 
-        });
+    componentList.forEach((comp) => {
+      if (!comp.script || comp.script.length === 0) {
+        return;
       }
-    }
+      comp.script.forEach((element) => {
+        const eventName = element.event;
+        const id = element.id || comp.id;
+        const code = this.eventScriptCode(element.code);
+        if (!eventName || !id || !code) {
+          return;
+        }
+        const safeCode = code.replace(/<\/script/gi, "<\\/script");
+        output += `\n\n document.getElementById('${id}').addEventListener("${eventName}", function(event){\n${safeCode}\n}); \n\n`;
+      });
+    });
     return output;
   };
 

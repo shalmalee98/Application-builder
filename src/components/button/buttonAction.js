@@ -31,6 +31,10 @@ export default function ButtonAction(props) {
   }
 
   const handleClickOpen = () => {
+    const scripts = props.ActionbarData.script || [];
+    const existing = scripts.filter((item) => item.event === "click");
+    setEventtype("click");
+    setCurrentCode(existing.length > 0 ? existing[0].code : "");
     setOpenDialog(true);
   };
   const handleClose = () => {
@@ -40,17 +44,29 @@ export default function ButtonAction(props) {
   };
   const handleSubmit = () => {
     var clone = Object.assign(props.ActionbarData, {});
+    const code = (currentCode || "")
+      .split("\n")
+      .filter((line) => line.trim() !== "//Add Code")
+      .join("\n")
+      .trim();
+    if (!eventtype) {
+      alert("Select an event");
+      return;
+    }
+    if (!code) {
+      alert("Enter a script for this event");
+      return;
+    }
+    if (!clone.script) {
+      clone.script = [];
+    }
     let arr1 = clone.script.filter((d) => d.event === eventtype);
 
     if (arr1.length === 0) {
-      var obj = { event: eventtype, code: currentCode, id: clone.id };
+      var obj = { event: eventtype, code: code, id: clone.id };
       clone.script.push(obj);
-      // setEventtype(newname);
-      // setCurrentCode("//Add Code");
     } else {
-      setEventtype(arr1[0].event);
-      arr1[0].code = currentCode;
-      // setCurrentCode(arr1[0].code);
+      arr1[0].code = code;
     }
     props.updateAppComponent(clone);
     setEventtype("");
@@ -98,7 +114,7 @@ export default function ButtonAction(props) {
 
       if (arr1.length === 0) {
         setEventtype(newname);
-        setCurrentCode("//Add Code");
+        setCurrentCode("");
       } else {
         setEventtype(arr1[0].event);
         setCurrentCode(arr1[0].code);
@@ -248,6 +264,7 @@ export default function ButtonAction(props) {
             rowsMin={15}
             style={{ width: 400 }}
             value={currentCode}
+            placeholder={"alert('Hello');"}
             onChange={(event) => {
               handleChange("script", event);
             }}

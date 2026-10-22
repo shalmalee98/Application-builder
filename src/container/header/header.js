@@ -8,13 +8,15 @@ import SaveIcon from "@material-ui/icons/Save";
 import { List, ListItemIcon } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import "./header.css";
+import { PROJECTS_PATH } from "../../services/services";
 
 export default function Header(props) {
   let path = "http://localhost:8081/Projects/" + props.appName + "/index.html";
 
   const clickDownload = () => {
     return alert(
-      "Your Project has been downloaded at the following path : \n 'C:/Users/shalm/Desktop/ApplicationBuilder/applicationbuilder/build/Projects/" +
+      "Your Project has been downloaded at the following path : \n '" +
+        PROJECTS_PATH +
         props.appName +
         "'"
     );
