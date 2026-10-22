@@ -14,15 +14,10 @@
   align-self: center;
   justify-content: center;
 }
-.form{
-  background-position-y: 300px;
+.form {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
-  padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  margin-top: 50px;
 }
 
 .application{

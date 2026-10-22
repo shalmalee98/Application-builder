@@ -1,11 +1,9 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
-import Alert from '@material-ui/lab/Alert';
 import "./landing-page.css";
 
 import { getApplicationJson } from "../../services/services";
@@ -18,7 +16,7 @@ export default function LandingPage(props) {
 
   const handleAppname = (event) => {
     props.setAppName(event.target.value);
-  }
+  };
   const openApp = () => {
     getApplicationList().then((data) => {
       const names =
@@ -85,66 +83,86 @@ export default function LandingPage(props) {
   };
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (!props.startAppButton) {
-          openApp();
-        }
-      }}
-    >
-      <h1 align="center">NEW APPLICATION</h1>
-      <br></br>
-      <TextField
-        style={{ width: 560 }}
-        autoFocus
-        margin="dense"
-        id="appname"
-        inputMode="text"
-        name="appname"
-        label="Enter Application name"
-        type="text"
-        fullWidth
-        onChange={handleAppname}
-        required
-      ></TextField>
-      <br></br>
-      <br></br>
-      <div className="alignment">
-        <Button onClick={openExistingApplication} color="primary">
-          Open Existing
-        </Button>
-        {dialogOpen && (
-          <Dialog onClose={handleDialogClose} open={dialogOpen}>
-            <DialogTitle id="simple-dialog-title">
-              List of applications
-            </DialogTitle>
-            <List>
-              {Object.keys(apps).map((key, i) => (
-                <ListItem
-                  button
-                  onClick={() => handleListItemClick(key)}
-                  key={i}
-                >
-                  <ListItemText primary={key} secondary={apps[key]}>
-                    {apps[key]}{" "}
-                  </ListItemText>
-                </ListItem>
-              ))}
-            </List>
-          </Dialog>
-        )}
-        <Button
-          disabled={props.startAppButton}
-          // onClick={props.openApplication}
-          onClick={openApp}
-          color="primary"
-        >
-          Open New Application
-        </Button>
+    <section className="landing-shell">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="landing-orb landing-orb-a animate-soft-pulse" />
+        <div className="landing-orb landing-orb-b" />
+        <div className="landing-grid" />
       </div>
-      <br></br>
-      <br></br>
-    </form>
+
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl flex-col justify-center px-6 py-12">
+        <div className="animate-fade-up max-w-2xl">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.28em] text-tide-700">
+            Visual page studio
+          </p>
+          <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-ink-950 sm:text-6xl md:text-7xl">
+            Application Builder
+          </h1>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-600 sm:text-xl">
+            Name a project, drop in components, and ship an interactive page in minutes.
+          </p>
+        </div>
+
+        <form
+          className="animate-fade-up mt-10 w-full max-w-xl delay-100"
+          style={{ animationDelay: "120ms" }}
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!props.startAppButton) {
+              openApp();
+            }
+          }}
+        >
+          <label htmlFor="appname" className="mb-2 block text-sm font-medium text-ink-700">
+            Project name
+          </label>
+          <input
+            id="appname"
+            name="appname"
+            type="text"
+            autoFocus
+            required
+            className="ab-field"
+            placeholder="Portfolio, dashboard, event RSVP…"
+            value={props.appName}
+            onChange={handleAppname}
+          />
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="submit"
+              className="ab-btn-primary"
+              disabled={props.startAppButton}
+            >
+              Open new application
+            </button>
+            <button
+              type="button"
+              className="ab-btn-secondary"
+              onClick={openExistingApplication}
+            >
+              Open existing
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {dialogOpen && (
+        <Dialog onClose={handleDialogClose} open={dialogOpen}>
+          <DialogTitle id="simple-dialog-title">Your applications</DialogTitle>
+          <List>
+            {Object.keys(apps).map((key, i) => (
+              <ListItem
+                button
+                onClick={() => handleListItemClick(key)}
+                key={i}
+              >
+                <ListItemText primary={key} secondary={apps[key]} />
+              </ListItem>
+            ))}
+          </List>
+        </Dialog>
+      )}
+    </section>
   );
 }

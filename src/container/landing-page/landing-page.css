@@ -1,4 +1,38 @@
-.alignment {
-    text-align: center;
-  }
-  
+.landing-shell {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 4rem);
+}
+
+.landing-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(40px);
+}
+
+.landing-orb-a {
+  top: 8%;
+  left: -6%;
+  width: 22rem;
+  height: 22rem;
+  background: rgba(39, 163, 145, 0.28);
+}
+
+.landing-orb-b {
+  right: -4%;
+  bottom: 12%;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(232, 136, 63, 0.2);
+}
+
+.landing-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(52, 67, 76, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 67, 76, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 40% 40%, black, transparent);
+}

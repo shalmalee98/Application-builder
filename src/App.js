@@ -387,20 +387,16 @@ export default class AppBuilder extends React.Component {
       startAppButton = false;
     }
     return (
-      <Grid container direction="row" justify="center" alignItems="center">
-        <div className="form">
-          <LandingPage
-            setJsonForm={this.setJsonForm}
-            setAppName={this.setAppName}
-            setComponentID={this.setComponentID}
-            openApplication={this.openApplication}
-            setAppComponent={this.setAppComponent}
-            startAppButton={startAppButton}
-            setFormdata={this.setFormdata}
-            appName={this.state.appName}
-          />
-        </div>
-      </Grid>
+      <LandingPage
+        setJsonForm={this.setJsonForm}
+        setAppName={this.setAppName}
+        setComponentID={this.setComponentID}
+        openApplication={this.openApplication}
+        setAppComponent={this.setAppComponent}
+        startAppButton={startAppButton}
+        setFormdata={this.setFormdata}
+        appName={this.state.appName}
+      />
     );
   };
 
