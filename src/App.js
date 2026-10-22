@@ -107,14 +107,43 @@ export default class AppBuilder extends React.Component {
   }
 
   handleComponentDelete = (compID) => {
-    let tmpcomp = [...this.state.appComponent];
-    tmpcomp.map((component, index) => {
-      if (compID === component.id) {
-        tmpcomp.splice(index, 1);
-        this.setAppComponent(tmpcomp);
-      }
-      return null;
-    });
+    const tmpcomp = this.state.appComponent.filter(
+      (component) => component.id !== compID
+    );
+    this.setAppComponent(tmpcomp);
+    if (this.state.ActionbarData && this.state.ActionbarData.id === compID) {
+      this.setActionbarData({});
+      this.setOpenActionBar(false);
+      this.setComponentBorder(null);
+    }
+  };
+
+  duplicateComponent = (compID) => {
+    const source = this.state.appComponent.find(
+      (component) => component.id === compID
+    );
+    if (!source) {
+      return;
+    }
+    const nextId = this.state.componentID + 1;
+    const clone = JSON.parse(JSON.stringify(source));
+    clone.id = "comp_" + nextId;
+    if (clone.Rndprops) {
+      clone.Rndprops = Object.assign({}, clone.Rndprops, {
+        x: Number(clone.Rndprops.x || 0) + 24,
+        y: Number(clone.Rndprops.y || 0) + 24,
+      });
+    }
+    if (Array.isArray(clone.script)) {
+      clone.script = clone.script.map((entry) =>
+        Object.assign({}, entry, { id: clone.id })
+      );
+    }
+    this.setComponentID(nextId);
+    this.setAppComponent([...this.state.appComponent, clone]);
+    this.setActionbarData(clone);
+    this.setComponentBorder(clone.id);
+    this.setOpenActionBar(true);
   };
 
   addComponentToForm = (data) => {
@@ -312,6 +341,7 @@ export default class AppBuilder extends React.Component {
       <div className="action-bar-container">
         <ActionBar
           handleComponentDelete={this.handleComponentDelete}
+          duplicateComponent={this.duplicateComponent}
           formdata={this.state.formdata}
           setFormdata={this.setFormdata}
           openActionBar={this.state.openActionBar}

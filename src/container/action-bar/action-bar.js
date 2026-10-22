@@ -2,8 +2,10 @@ import React from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import DeleteIcon from "@material-ui/icons/Delete";
+import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 
 import "../action-bar/action-bar.css";
+import { notifyInfo, notifySuccess } from "../../components/toast/notify";
 import ButtonAction from "../../components/button/buttonAction";
 import TextboxAction from "../../components/textbox/textboxAction";
 import RadiobuttonAction from "../../components/radiobutton/radiobuttonAction";
@@ -29,9 +31,27 @@ export default class ActionBar extends React.Component {
       this.props.setOpenActionBar(true);
     };
     const handleComponentDelete = (compId) => {
+      const label =
+        (this.props.ActionbarData && this.props.ActionbarData.type) ||
+        "component";
+      const confirmed = window.confirm(
+        "Delete this " + label + "? You can still undo by not saving."
+      );
+      if (!confirmed) {
+        notifyInfo("Delete cancelled");
+        return;
+      }
       this.props.handleComponentDelete(compId);
       handleDrawerClose();
       this.props.setActionbarData({});
+      notifySuccess(label + " deleted");
+    };
+
+    const handleComponentDuplicate = (compId) => {
+      if (typeof this.props.duplicateComponent === "function") {
+        this.props.duplicateComponent(compId);
+        notifySuccess("Component duplicated");
+      }
     };
 
     const handleChange = (type, event) => {
@@ -87,16 +107,28 @@ export default class ActionBar extends React.Component {
           )}
           {renderField("X", this.props.ActionbarData.Rndprops.x, "x")}
           {renderField("Y", this.props.ActionbarData.Rndprops.y, "y")}
-          <button
-            type="button"
-            className="ab-btn-secondary mt-2 w-full text-ember-600 hover:border-ember-400"
-            onClick={() =>
-              handleComponentDelete(this.props.ActionbarData.id)
-            }
-          >
-            <DeleteIcon fontSize="small" />
-            Delete
-          </button>
+          <div className="mt-2 flex flex-col gap-2">
+            <button
+              type="button"
+              className="ab-btn-secondary w-full"
+              onClick={() =>
+                handleComponentDuplicate(this.props.ActionbarData.id)
+              }
+            >
+              <FileCopyOutlinedIcon fontSize="small" />
+              Duplicate
+            </button>
+            <button
+              type="button"
+              className="ab-btn-secondary w-full text-ember-600 hover:border-ember-400"
+              onClick={() =>
+                handleComponentDelete(this.props.ActionbarData.id)
+              }
+            >
+              <DeleteIcon fontSize="small" />
+              Delete
+            </button>
+          </div>
         </div>
       );
     };
