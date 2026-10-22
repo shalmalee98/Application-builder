@@ -61,6 +61,15 @@
   transform: translateX(1px);
 }
 
+.ab-palette-item:focus-visible {
+  outline: 2px solid #43bfab;
+  outline-offset: 1px;
+}
+
+.ab-palette-item:active {
+  transform: scale(0.98);
+}
+
 .ab-icon-btn {
   display: inline-flex;
   align-items: center;

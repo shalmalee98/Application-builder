@@ -40,6 +40,7 @@
   background: rgba(255, 255, 255, 0.78);
   padding: 0.55rem 0.75rem;
   backdrop-filter: blur(8px);
+  animation: ab-toolbar-in 280ms ease-out;
 }
 
 .ab-canvas-chip {
@@ -57,6 +58,27 @@
   border-color: rgba(39, 163, 145, 0.45);
   background: rgba(238, 251, 248, 0.95);
   color: #1a6961;
+}
+
+.ab-canvas-chip:hover {
+  border-color: rgba(39, 163, 145, 0.4);
+  transform: translateY(-1px);
+}
+
+.ab-canvas-chip:focus-visible {
+  outline: 2px solid #43bfab;
+  outline-offset: 2px;
+}
+
+@keyframes ab-toolbar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .ab-canvas-zoom {
