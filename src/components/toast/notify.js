@@ -23,3 +23,7 @@ export function notifySuccess(message) {
 export function notifyError(message) {
   return notify(message, "error");
 }
+
+export function notifyInfo(message) {
+  return notify(message, "info");
+}
