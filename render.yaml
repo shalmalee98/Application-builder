@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: application-builder-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PROJECTS_DIR
+        value: /data/Projects
+      - key: API_PORT
+        value: "18080"
+    disk:
+      name: application-builder-projects
+      mountPath: /data
+      sizeGB: 1
