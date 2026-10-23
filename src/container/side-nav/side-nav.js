@@ -91,10 +91,12 @@ export default function SideNav(props) {
         type="button"
         className="ab-palette-item"
         onClick={() => handleComponentSelect(item.type)}
-        title={item.label}
+        title={`Add ${item.label}`}
       >
-        <Icon fontSize="small" />
-        {props.openSideNav ? <span>{item.label}</span> : null}
+        <span className="ab-palette-icon">
+          <Icon fontSize="small" />
+        </span>
+        {props.openSideNav ? <span className="ab-palette-text">{item.label}</span> : null}
       </button>
     );
   };
@@ -105,11 +107,14 @@ export default function SideNav(props) {
         props.openSideNav ? "ab-side-nav-open" : "ab-side-nav-closed"
       }`}
     >
-      <div className="flex items-center justify-between border-b border-ink-100 px-2 py-2">
+      <div className="ab-side-nav-head">
         {props.openSideNav ? (
-          <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-500">
-            Components
-          </p>
+          <div className="min-w-0 px-1">
+            <p className="ab-palette-kicker">Insert</p>
+            <p className="truncate text-sm font-semibold text-white">
+              Components
+            </p>
+          </div>
         ) : (
           <span className="sr-only">Components</span>
         )}
@@ -132,7 +137,7 @@ export default function SideNav(props) {
         </div>
         <div className="ab-palette-group">
           {props.openSideNav ? (
-            <p className="ab-palette-label">Data</p>
+            <p className="ab-palette-label">Data & charts</p>
           ) : null}
           {CHART_ITEMS.map(renderItem)}
         </div>
