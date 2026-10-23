@@ -244,10 +244,12 @@ export default function Application(props) {
   return (
     <div className="form-container ab-canvas-shell" onClick={ActionBarOpen}>
       <div className="ab-canvas-toolbar" onClick={(event) => event.stopPropagation()}>
+        <span className="ab-canvas-toolbar-label">Canvas</span>
         <button
           type="button"
           className="ab-canvas-chip"
           onClick={() => setZoom((value) => Math.max(0.5, Number((value - 0.1).toFixed(1))))}
+          aria-label="Zoom out"
         >
           −
         </button>
@@ -256,6 +258,7 @@ export default function Application(props) {
           type="button"
           className="ab-canvas-chip"
           onClick={() => setZoom((value) => Math.min(1.5, Number((value + 0.1).toFixed(1))))}
+          aria-label="Zoom in"
         >
           +
         </button>
@@ -264,7 +267,7 @@ export default function Application(props) {
           className="ab-canvas-chip"
           onClick={() => setZoom(1)}
         >
-          Reset
+          100%
         </button>
         <button
           type="button"
@@ -307,12 +310,14 @@ export default function Application(props) {
               }}
               onClick={ActionBarOpen}
             >
+              <span className="ab-canvas-empty-badge">Drop components here</span>
               <p className="font-display text-2xl font-semibold text-ink-800">
-                Blank canvas
+                Your page starts empty
               </p>
-              <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink-500">
-                Pick a component from the left palette, then drag it into place.
-                Click the page to edit canvas size and color.
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-ink-500">
+                Add widgets from the left rail, drag to arrange, then tune
+                properties in the inspector. Click the canvas to edit page size
+                and background.
               </p>
             </div>
           )}
