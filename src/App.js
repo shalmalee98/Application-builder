@@ -391,6 +391,7 @@ export default class AppBuilder extends React.Component {
         startbuttons={startbuttons}
         saved={this.state.saved}
         setSaved={this.setSaved}
+        onBack={() => this.setOpen(false)}
       />
     );
   };

@@ -2,6 +2,7 @@ import React from "react";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import SaveIcon from "@material-ui/icons/Save";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import "./header.css";
 import { PROJECTS_PATH } from "../../services/services";
 import { previewAppUrl } from "../../config";
@@ -15,24 +16,57 @@ export default function Header(props) {
   };
 
   return (
-    <header className="ab-header">
-      <div className="mx-auto flex h-16 w-full max-w-[1600px] items-center gap-4 px-4 sm:px-6">
+    <header className={`ab-header ${props.open ? "ab-header-workspace" : ""}`}>
+      <div className="ab-header-inner">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-tide-600 text-sm font-bold text-white shadow-soft">
-            AB
-          </span>
+          {props.open ? (
+            <button
+              type="button"
+              className="ab-header-back"
+              onClick={() => {
+                if (typeof props.onBack === "function") {
+                  props.onBack();
+                }
+              }}
+              title="Back to projects"
+            >
+              <ArrowBackIcon fontSize="small" />
+              <span className="hidden sm:inline">Projects</span>
+            </button>
+          ) : (
+            <span className="ab-header-mark" aria-hidden="true">
+              AB
+            </span>
+          )}
+
           <div className="min-w-0">
-            <p className="truncate font-display text-lg font-semibold tracking-tight text-white">
-              Application Builder
-            </p>
             {props.open ? (
-              <p className="truncate font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
-                {props.appName}
-              </p>
+              <>
+                <div className="flex items-center gap-2">
+                  <p className="truncate font-display text-base font-semibold tracking-tight text-white sm:text-lg">
+                    {props.appName || "Untitled"}
+                  </p>
+                  <span
+                    className={`ab-header-status ${
+                      props.saved ? "is-saved" : "is-draft"
+                    }`}
+                  >
+                    {props.saved ? "Saved" : "Unsaved"}
+                  </span>
+                </div>
+                <p className="truncate text-xs text-ink-300">
+                  Visual editor · Application Builder
+                </p>
+              </>
             ) : (
-              <p className="truncate text-xs text-ink-300">
-                Design interactive pages
-              </p>
+              <>
+                <p className="truncate font-display text-lg font-semibold tracking-tight text-white">
+                  Application Builder
+                </p>
+                <p className="truncate text-xs text-ink-300">
+                  Design interactive pages
+                </p>
+              </>
             )}
           </div>
         </div>
@@ -41,7 +75,7 @@ export default function Header(props) {
           <div className="ml-auto flex items-center gap-2">
             <button
               type="button"
-              className="ab-header-action"
+              className="ab-header-action ab-header-action-primary"
               onClick={props.saveApp}
               title="Save"
             >
@@ -52,7 +86,7 @@ export default function Header(props) {
               href={path}
               target="_blank"
               rel="noopener noreferrer"
-              className={`ab-header-action ${
+              className={`ab-header-action ab-header-action-accent ${
                 props.startbuttons ? "pointer-events-none opacity-40" : ""
               }`}
               title="Run preview"
@@ -71,10 +105,10 @@ export default function Header(props) {
               className="ab-header-action"
               onClick={clickDownload}
               disabled={props.startbuttons}
-              title="Download path"
+              title="Show save path"
             >
               <SaveAltIcon fontSize="small" />
-              <span className="hidden sm:inline">Path</span>
+              <span className="hidden md:inline">Path</span>
             </button>
           </div>
         )}
