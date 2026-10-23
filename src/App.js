@@ -435,9 +435,11 @@ export default class AppBuilder extends React.Component {
       <div className="flex h-full min-h-screen flex-col">
         {this.renderHeader()}
         <div
-          className={`flex min-h-0 flex-1 ${
-            this.state.open ? "flex-row overflow-hidden" : "flex-col"
-          }`}
+          className={
+            this.state.open
+              ? "ab-workspace"
+              : "flex min-h-0 flex-1 flex-col"
+          }
         >
           {this.renderBody()}
         </div>
