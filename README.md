@@ -10,7 +10,7 @@ Originally bootstrapped with [Create React App](https://github.com/facebook/crea
 - **Java 8 or 11** for the Spring Boot API jar (OpenJDK 11 via Homebrew works well on Apple Silicon)
 - **npm**
 
-## Quick start
+## Quick start (local)
 
 Run these three processes from the repo root (separate terminals):
 
@@ -26,7 +26,7 @@ npm install
 npm start
 ```
 
-This builds Tailwind CSS, watches for style changes, and starts the React app at [http://localhost:3000](http://localhost:3000).
+App: [http://localhost:3000](http://localhost:3000)
 
 ### 3. Backend API (port 8080)
 
@@ -35,27 +35,17 @@ export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
 java -jar original-SpringFileProj-1-0.0.1-SNAPSHOT.jar
 ```
 
-The API handles save / list / load for projects under `build/Projects/`.
-
 ### 4. Preview server (port 8081)
-
-Saved apps are written into `build/Projects/<appName>/`. Serve that folder so the **Run** button works:
 
 ```bash
 mkdir -p build/Projects
 npx http-server ./build -p 8081 -c-1 --cors
 ```
 
-Preview URL pattern:
+Preview URL:
 
 ```text
 http://localhost:8081/Projects/<appName>/index.html
-```
-
-If you see `EADDRINUSE` on 8081, something is already serving that port — open the URL above, or free it with:
-
-```bash
-kill $(lsof -tiTCP:8081 -sTCP:LISTEN)
 ```
 
 ## Production build
@@ -64,17 +54,65 @@ kill $(lsof -tiTCP:8081 -sTCP:LISTEN)
 npm run build
 ```
 
-Creates an optimized CRA build (after compiling Tailwind) in `build/`. Keep using the Spring jar + `http-server` for save/preview as above.
+Optional build-time env vars:
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `REACT_APP_API_URL` | `http://localhost:8080` | Spring Boot API base URL |
+| `REACT_APP_PREVIEW_URL` | `http://localhost:8081` | Preview host for Run |
+| `REACT_APP_PROJECTS_PATH` | local `build/Projects/` path | Absolute path the API writes to |
+
+## Deploying
+
+### Frontend (GitHub Pages)
+
+Workflow: `.github/workflows/deploy-pages.yml`
+
+1. Repo **Settings → Pages → Source = GitHub Actions**
+2. Site: `https://shalmalee98.github.io/Application-builder/`
+
+### Backend jar + preview (Railway / Render)
+
+`Dockerfile` runs the Spring Boot jar and a Node proxy on one public port:
+
+- `/save`, `/getall`, `/getjson` → jar
+- `/Projects/*` → saved apps
+- `/health` → health check
+
+#### Railway
+
+```bash
+npx @railway/cli login
+npx @railway/cli init
+npx @railway/cli up
+npx @railway/cli domain
+```
+
+Recommended service variables:
+
+- `PROJECTS_DIR=/data/Projects`
+- `API_PORT=18080`
+
+Attach a volume at `/data` so saves survive restarts.
+
+Point the frontend at the Railway URL:
+
+```bash
+REACT_APP_API_URL=https://YOUR-SERVICE.up.railway.app \
+REACT_APP_PREVIEW_URL=https://YOUR-SERVICE.up.railway.app \
+REACT_APP_PROJECTS_PATH=/data/Projects/ \
+npm run build
+```
+
+#### Render
+
+Use the Blueprint in `render.yaml`, or create a Docker web service from this repo’s `Dockerfile`.
 
 ## Project notes
 
-- Saved applications live in `build/Projects/`.
-- The projects path used by the frontend is configured in `src/services/services.js` (`PROJECTS_PATH`). Update it if you move the repo.
-- After restarting the Spring jar, save an app once before relying on **Open existing** / recent list (the API remembers the projects folder after the first save in that process).
-- Key scripts:
-  - `npm start` — Tailwind watch + React dev server
-  - `npm run build:css` — one-shot Tailwind compile
-  - `npm run build` — production frontend build
+- Local saves go to `build/Projects/`.
+- Config lives in `src/config.js`.
+- After restarting the Spring jar, save once before relying on Open Existing (the API remembers the projects folder after the first save).
 
 ## Stack
 
