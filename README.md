@@ -71,7 +71,7 @@ Workflow: `.github/workflows/deploy-pages.yml`
 1. Repo **Settings → Pages → Source = GitHub Actions**
 2. Site: `https://shalmalee98.github.io/Application-builder/`
 
-### Backend jar + preview (Railway / Render)
+### Backend jar + preview (Render)
 
 `Dockerfile` runs the Spring Boot jar and a Node proxy on one public port:
 
@@ -79,7 +79,26 @@ Workflow: `.github/workflows/deploy-pages.yml`
 - `/Projects/*` → saved apps
 - `/health` → health check
 
-#### Railway
+**Recommended:** [Deploy to Render](https://render.com/deploy?repo=https://github.com/shalmalee98/Application-builder) (uses `render.yaml`).
+
+1. Sign up / sign in on Render (Google or email works; GitHub OAuth is optional).
+2. Approve the Blueprint → create `application-builder-api`.
+3. After deploy, copy the service URL (e.g. `https://application-builder-api.onrender.com`).
+
+Point the frontend at that URL:
+
+```bash
+REACT_APP_API_URL=https://YOUR-SERVICE.onrender.com \
+REACT_APP_PREVIEW_URL=https://YOUR-SERVICE.onrender.com \
+REACT_APP_PROJECTS_PATH=/data/Projects/ \
+npm run build
+```
+
+Free tier has no persistent disk — saves reset when the instance sleeps/restarts. Upgrade and add a disk at `/data` if you need persistence.
+
+#### Railway (optional)
+
+Railway sometimes disables new signups. If you already have an account:
 
 ```bash
 npx @railway/cli login
@@ -88,25 +107,7 @@ npx @railway/cli up
 npx @railway/cli domain
 ```
 
-Recommended service variables:
-
-- `PROJECTS_DIR=/data/Projects`
-- `API_PORT=18080`
-
-Attach a volume at `/data` so saves survive restarts.
-
-Point the frontend at the Railway URL:
-
-```bash
-REACT_APP_API_URL=https://YOUR-SERVICE.up.railway.app \
-REACT_APP_PREVIEW_URL=https://YOUR-SERVICE.up.railway.app \
-REACT_APP_PROJECTS_PATH=/data/Projects/ \
-npm run build
-```
-
-#### Render
-
-Use the Blueprint in `render.yaml`, or create a Docker web service from this repo’s `Dockerfile`.
+Set `PROJECTS_DIR=/data/Projects`, `API_PORT=18080`, and attach a volume at `/data`.
 
 ## Project notes
 
