@@ -79,17 +79,18 @@ Workflow: `.github/workflows/deploy-pages.yml`
 - `/Projects/*` → saved apps
 - `/health` → health check
 
-**Recommended:** [Deploy to Render](https://render.com/deploy?repo=https://github.com/shalmalee98/Application-builder) (uses `render.yaml`).
+**Live API:** https://application-builder-api.onrender.com  
+Blueprint id: `exs-dbdeijhsrm7s73bfq6dg`
 
-1. Sign up / sign in on Render (Google or email works; GitHub OAuth is optional).
-2. Approve the Blueprint → create `application-builder-api`.
-3. After deploy, copy the service URL (e.g. `https://application-builder-api.onrender.com`).
+GitHub Pages builds already set `REACT_APP_API_URL` / `REACT_APP_PREVIEW_URL` to that host.
 
-Point the frontend at that URL:
+To redeploy the jar: [Render Blueprint](https://render.com/deploy?repo=https://github.com/shalmalee98/Application-builder) (uses `render.yaml`).
+
+Local production build against Render:
 
 ```bash
-REACT_APP_API_URL=https://YOUR-SERVICE.onrender.com \
-REACT_APP_PREVIEW_URL=https://YOUR-SERVICE.onrender.com \
+REACT_APP_API_URL=https://application-builder-api.onrender.com \
+REACT_APP_PREVIEW_URL=https://application-builder-api.onrender.com \
 REACT_APP_PROJECTS_PATH=/data/Projects/ \
 npm run build
 ```

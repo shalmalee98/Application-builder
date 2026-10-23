@@ -35,6 +35,9 @@ jobs:
           CI: "false"
           NODE_OPTIONS: --openssl-legacy-provider
           PUBLIC_URL: /Application-builder
+          REACT_APP_API_URL: https://application-builder-api.onrender.com
+          REACT_APP_PREVIEW_URL: https://application-builder-api.onrender.com
+          REACT_APP_PROJECTS_PATH: /data/Projects/
         run: npm run build
 
       - name: Upload Pages artifact
