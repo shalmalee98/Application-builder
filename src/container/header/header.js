@@ -4,10 +4,11 @@ import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import SaveIcon from "@material-ui/icons/Save";
 import "./header.css";
 import { PROJECTS_PATH } from "../../services/services";
+import { previewAppUrl } from "../../config";
 import { notifyInfo } from "../../components/toast/notify";
 
 export default function Header(props) {
-  const path = "http://localhost:8081/Projects/" + props.appName + "/index.html";
+  const path = previewAppUrl(props.appName);
 
   const clickDownload = () => {
     notifyInfo("Saved project path: " + PROJECTS_PATH + props.appName);

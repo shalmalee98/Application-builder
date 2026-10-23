@@ -1,13 +1,12 @@
 import axios from "axios";
 import { notifyError, notifySuccess } from "../components/toast/notify";
+import { API_URL, PROJECTS_PATH } from "../config";
 
-const URL = "http://localhost:8080";
-export const PROJECTS_PATH =
-  "/Users/shalmaleeshenolikar/Documents/Application-builder/build/Projects/";
+export { PROJECTS_PATH };
 
 export function save_file(data) {
   return axios
-    .post(`${URL}/save`, data, {
+    .post(`${API_URL}/save`, data, {
       params: {
         path: PROJECTS_PATH,
       },
@@ -24,7 +23,7 @@ export function save_file(data) {
 }
 export function getApplicationList() {
   return axios
-    .get(`${URL}/getall`)
+    .get(`${API_URL}/getall`)
     .then((response) => {
       return response.data;
     })
@@ -37,7 +36,7 @@ export function getApplicationList() {
 
 export function getApplicationJson(appName) {
   return axios
-    .get(`${URL}/getjson`, {
+    .get(`${API_URL}/getjson`, {
       params: {
         name: appName,
       },
