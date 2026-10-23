@@ -5,6 +5,20 @@ import { getApplicationJson } from "../../services/services";
 import { getApplicationList } from "../../services/services";
 import { notifyInfo } from "../../components/toast/notify";
 
+function initials(name) {
+  const parts = String(name || "")
+    .trim()
+    .split(/[\s_-]+/)
+    .filter(Boolean);
+  if (parts.length === 0) {
+    return "App";
+  }
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
 export default function LandingPage(props) {
   const [apps, setApps] = React.useState({});
   const [loadingApps, setLoadingApps] = React.useState(true);
@@ -99,25 +113,31 @@ export default function LandingPage(props) {
         <div className="landing-orb landing-orb-a animate-soft-pulse" />
         <div className="landing-orb landing-orb-b" />
         <div className="landing-grid" />
+        <div className="landing-sheen" />
       </div>
 
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:items-center">
-        <div>
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl gap-10 px-4 py-10 sm:gap-12 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] lg:items-stretch">
+        <div className="flex flex-col justify-center">
           <div className="animate-fade-up max-w-2xl">
-            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.28em] text-tide-700 sm:mb-4 sm:text-xs">
-              Visual page studio
-            </p>
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink-950 sm:text-6xl md:text-7xl">
-              Application Builder
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-ink-200/80 bg-white/70 px-3 py-1 shadow-sm backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-tide-500" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-ink-600">
+                Low-code studio
+              </span>
+            </div>
+            <h1 className="font-display text-[2.75rem] font-bold leading-[0.98] tracking-tight text-ink-950 sm:text-6xl md:text-7xl">
+              Application
+              <span className="block text-tide-700">Builder</span>
             </h1>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-600 sm:mt-5 sm:text-xl">
-              Name a project, drop in components, and ship an interactive page in minutes.
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-600 sm:text-lg">
+              Compose pages visually, wire interactions, and preview instantly —
+              the workspace for shipping internal tools without waiting on a full stack.
             </p>
           </div>
 
           <form
-            className="animate-fade-up mt-8 w-full max-w-xl sm:mt-10"
-            style={{ animationDelay: "120ms" }}
+            className="animate-fade-up mt-9 w-full max-w-xl rounded-2xl border border-ink-200/80 bg-white/80 p-5 shadow-panel backdrop-blur sm:mt-10 sm:p-6"
+            style={{ animationDelay: "100ms" }}
             onSubmit={(event) => {
               event.preventDefault();
               if (!props.startAppButton) {
@@ -125,8 +145,17 @@ export default function LandingPage(props) {
               }
             }}
           >
-            <label htmlFor="appname" className="mb-2 block text-sm font-medium text-ink-700">
-              Project name
+            <div className="mb-4 flex items-baseline justify-between gap-3">
+              <div>
+                <p className="ab-kicker">New project</p>
+                <h2 className="mt-1 font-display text-xl font-semibold text-ink-900">
+                  Start building
+                </h2>
+              </div>
+            </div>
+
+            <label htmlFor="appname" className="mb-1.5 block text-sm font-medium text-ink-700">
+              Application name
             </label>
             <input
               id="appname"
@@ -135,47 +164,45 @@ export default function LandingPage(props) {
               autoFocus
               required
               className="ab-field"
-              placeholder="Portfolio, dashboard, event RSVP…"
+              placeholder="e.g. Ops dashboard, RSVP form…"
               value={props.appName}
               onChange={handleAppname}
             />
 
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:items-center">
               <button
                 type="submit"
-                className="ab-btn-primary w-full sm:w-auto"
+                className="ab-btn-primary w-full sm:min-w-[11rem] sm:w-auto"
                 disabled={props.startAppButton}
               >
-                Open new application
+                Create application
               </button>
               <button
                 type="button"
                 className="ab-btn-ghost w-full sm:w-auto"
                 onClick={refreshApps}
               >
-                Refresh list
+                Refresh library
               </button>
             </div>
             <p className="mt-3 text-xs text-ink-500">
-              Tip: press Enter after naming a project to open it.
+              Press Enter to open. Existing names reopen the saved project.
             </p>
           </form>
         </div>
 
         <aside
-          className="animate-fade-up ab-panel p-4 sm:p-5"
-          style={{ animationDelay: "180ms" }}
+          className="animate-fade-up flex min-h-[22rem] flex-col rounded-2xl border border-ink-200/80 bg-white/85 p-4 shadow-panel backdrop-blur sm:p-5"
+          style={{ animationDelay: "160ms" }}
         >
           <div className="mb-4 flex items-end justify-between gap-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink-500">
-                Recent
-              </p>
-              <h2 className="font-display text-2xl font-semibold text-ink-900">
+              <p className="ab-kicker">Library</p>
+              <h2 className="mt-1 font-display text-2xl font-semibold text-ink-900">
                 Your applications
               </h2>
             </div>
-            <span className="rounded-full bg-ink-100 px-2.5 py-1 font-mono text-xs text-ink-600">
+            <span className="rounded-md bg-ink-100 px-2 py-1 font-mono text-xs font-medium text-ink-600">
               {appEntries.length}
             </span>
           </div>
@@ -186,41 +213,60 @@ export default function LandingPage(props) {
           <input
             id="app-search"
             type="search"
-            className="ab-field !rounded-xl !py-2.5 !text-sm"
-            placeholder="Search by name…"
+            className="ab-field !py-2.5"
+            placeholder="Search projects…"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             disabled={loadingApps || appEntries.length === 0}
           />
 
-          <div className="mt-4 max-h-80 space-y-2 overflow-y-auto pr-1">
+          <div className="mt-4 min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
             {loadingApps ? (
-              <p className="py-8 text-center text-sm text-ink-500">
-                Loading projects…
-              </p>
+              <div className="space-y-2 py-2">
+                {[0, 1, 2].map((n) => (
+                  <div key={n} className="ab-recent-skeleton" />
+                ))}
+              </div>
             ) : null}
 
             {!loadingApps && filteredApps.length === 0 ? (
-              <p className="py-8 text-center text-sm text-ink-500">
-                {appEntries.length === 0
-                  ? "No saved applications yet. Create one to get started."
-                  : "No projects match that search."}
-              </p>
+              <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-tide-50 text-sm font-bold text-tide-700">
+                  +
+                </div>
+                <p className="text-sm font-medium text-ink-700">
+                  {appEntries.length === 0
+                    ? "No applications yet"
+                    : "No matches"}
+                </p>
+                <p className="mt-1 max-w-[16rem] text-xs leading-relaxed text-ink-500">
+                  {appEntries.length === 0
+                    ? "Name a project on the left and create your first canvas."
+                    : "Try a different search term."}
+                </p>
+              </div>
             ) : null}
 
-            {filteredApps.map((app) => (
+            {filteredApps.map((app, index) => (
               <button
                 key={app.name}
                 type="button"
                 className="ab-recent-item"
+                style={{ animationDelay: `${Math.min(index, 8) * 40}ms` }}
                 onClick={() => handleListItemClick(app.name)}
               >
-                <span className="truncate font-medium text-ink-900">
-                  {app.name}
+                <span className="ab-recent-avatar" aria-hidden="true">
+                  {initials(app.name)}
                 </span>
-                <span className="truncate font-mono text-[11px] text-ink-500">
-                  {app.updatedAt}
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate font-semibold text-ink-900">
+                    {app.name}
+                  </span>
+                  <span className="mt-0.5 block truncate font-mono text-[11px] text-ink-500">
+                    Updated {app.updatedAt}
+                  </span>
                 </span>
+                <span className="ab-recent-open">Open</span>
               </button>
             ))}
           </div>

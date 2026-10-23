@@ -7,59 +7,145 @@
 .landing-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(40px);
+  filter: blur(48px);
 }
 
 .landing-orb-a {
-  top: 8%;
-  left: -6%;
-  width: 22rem;
-  height: 22rem;
-  background: rgba(39, 163, 145, 0.28);
+  top: 6%;
+  left: -8%;
+  width: 24rem;
+  height: 24rem;
+  background: rgba(31, 157, 138, 0.26);
 }
 
 .landing-orb-b {
-  right: -4%;
-  bottom: 12%;
-  width: 18rem;
-  height: 18rem;
-  background: rgba(232, 136, 63, 0.2);
+  right: -6%;
+  bottom: 8%;
+  width: 20rem;
+  height: 20rem;
+  background: rgba(224, 122, 47, 0.16);
 }
 
 .landing-grid {
   position: absolute;
   inset: 0;
-  opacity: 0.35;
+  opacity: 0.4;
   background-image:
-    linear-gradient(rgba(52, 67, 76, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(52, 67, 76, 0.06) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 70% 60% at 40% 40%, black, transparent);
+    linear-gradient(rgba(42, 54, 61, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 54, 61, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 75% 65% at 42% 38%, black, transparent);
+}
+
+.landing-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 48%,
+    transparent 62%
+  );
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .ab-recent-item {
   display: flex;
   width: 100%;
-  flex-direction: column;
-  gap: 0.2rem;
-  border: 1px solid rgba(197, 213, 218, 0.75);
-  border-radius: 0.9rem;
-  background: rgba(255, 255, 255, 0.72);
-  padding: 0.8rem 0.95rem;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(196, 211, 217, 0.85);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.7rem 0.8rem;
   text-align: left;
   cursor: pointer;
-  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+  animation: fade-up 0.35s ease-out both;
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
 }
 
 .ab-recent-item:hover {
-  border-color: rgba(39, 163, 145, 0.45);
-  background: rgba(238, 251, 248, 0.9);
+  border-color: rgba(31, 157, 138, 0.42);
+  background: rgba(237, 250, 247, 0.95);
+  box-shadow: 0 10px 24px -18px rgba(18, 24, 29, 0.45);
   transform: translateY(-1px);
 }
 
 .ab-recent-item:focus-visible {
-  outline: 2px solid #43bfab;
+  outline: 2px solid #3bb8a3;
   outline-offset: 2px;
+}
+
+.ab-recent-avatar {
+  display: inline-flex;
+  height: 2.35rem;
+  width: 2.35rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.7rem;
+  background: linear-gradient(145deg, #187f71, #1f9d8a);
+  color: #fff;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.ab-recent-open {
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: rgba(226, 234, 237, 0.85);
+  color: #425d6a;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.ab-recent-item:hover .ab-recent-open {
+  opacity: 1;
+  background: rgba(31, 157, 138, 0.14);
+  color: #16665c;
+}
+
+.ab-recent-skeleton {
+  height: 3.5rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(
+    90deg,
+    rgba(226, 234, 237, 0.7) 0%,
+    rgba(242, 246, 247, 0.95) 50%,
+    rgba(226, 234, 237, 0.7) 100%
+  );
+  background-size: 200% 100%;
+  animation: ab-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes ab-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 640px) {
@@ -71,5 +157,9 @@
   .landing-orb-b {
     width: 11rem;
     height: 11rem;
+  }
+
+  .ab-recent-open {
+    opacity: 1;
   }
 }
