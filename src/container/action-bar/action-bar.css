@@ -2,20 +2,31 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-left: 1px solid rgba(197, 213, 218, 0.9);
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(196, 211, 217, 0.95);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
   transition: width 180ms ease;
+  box-shadow: -12px 0 28px -24px rgba(18, 24, 29, 0.35);
 }
 
 .ab-action-bar-open {
-  width: 17rem;
-  min-width: 17rem;
+  width: 18rem;
+  min-width: 18rem;
 }
 
 .ab-action-bar-closed {
-  width: 3.75rem;
-  min-width: 3.75rem;
+  width: 3.85rem;
+  min-width: 3.85rem;
+}
+
+.ab-action-bar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  border-bottom: 1px solid rgba(226, 234, 237, 0.95);
+  padding: 0.65rem 0.55rem;
+  background: linear-gradient(180deg, #f8fbfb, #ffffff);
 }
 
 .ab-action-bar-scroll {
@@ -24,13 +35,43 @@
 }
 
 .ab-inspector-body {
-  padding: 0.75rem 0.85rem 1rem;
+  padding: 0.85rem 0.9rem 1rem;
+}
+
+.ab-inspector-title {
+  border-bottom: 1px solid rgba(226, 234, 237, 0.95);
+  padding: 0.85rem 1rem;
+  background: linear-gradient(180deg, rgba(237, 250, 247, 0.55), transparent);
+}
+
+.ab-inspector-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+}
+
+.ab-inspector-empty-icon {
+  display: flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  border-radius: 0.75rem;
+  background: rgba(31, 157, 138, 0.1);
+  color: #187f71;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .ab-inspector-section {
   margin-top: 1rem;
   padding-top: 0.85rem;
-  border-top: 1px solid rgba(227, 235, 237, 0.95);
+  border-top: 1px solid rgba(226, 234, 237, 0.95);
 }
 
 .ab-inspector-heading {
@@ -39,7 +80,7 @@
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #6d8f9c;
+  color: #688d9a;
 }
 
 .ab-inspector-field {
@@ -48,8 +89,8 @@
   gap: 0.3rem;
   margin-bottom: 0.65rem;
   font-size: 0.75rem;
-  font-weight: 500;
-  color: #527482;
+  font-weight: 600;
+  color: #4f7382;
 }
 
 .action-bar-container {
@@ -57,16 +98,25 @@
   display: flex;
 }
 
+.ab-action-bar .ab-icon-btn {
+  color: #4f7382;
+}
+
+.ab-action-bar .ab-icon-btn:hover {
+  background: rgba(31, 157, 138, 0.1);
+  color: #16665c;
+}
+
 /* Soften nested Material controls inside the inspector */
 .ab-action-bar .MuiListItem-root {
   padding-left: 0 !important;
   padding-right: 0 !important;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
 }
 
 .ab-action-bar .MuiList-padding {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
 }
 
 .ab-action-bar .MuiFormControl-root,
@@ -83,46 +133,46 @@
 
 .ab-action-bar .MuiInputLabel-root {
   font-family: "Sora", ui-sans-serif, system-ui, sans-serif !important;
-  color: #527482 !important;
+  color: #4f7382 !important;
 }
 
 .ab-action-bar .MuiOutlinedInput-root {
-  border-radius: 0.75rem !important;
-  background: rgba(255, 255, 255, 0.92);
+  border-radius: 0.65rem !important;
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .ab-action-bar .MuiOutlinedInput-notchedOutline {
-  border-color: rgba(197, 213, 218, 0.95) !important;
+  border-color: rgba(196, 211, 217, 0.95) !important;
 }
 
 .ab-action-bar .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: #43bfab !important;
+  border-color: #3bb8a3 !important;
   border-width: 1.5px !important;
 }
 
 .ab-action-bar .MuiInput-underline:before {
-  border-bottom-color: rgba(197, 213, 218, 0.95) !important;
+  border-bottom-color: rgba(196, 211, 217, 0.95) !important;
 }
 
 .ab-action-bar .MuiInput-underline:after {
-  border-bottom-color: #27a391 !important;
+  border-bottom-color: #1f9d8a !important;
 }
 
 .ab-action-bar .MuiButton-root {
-  border-radius: 0.75rem !important;
+  border-radius: 0.65rem !important;
   text-transform: none !important;
   font-family: "Sora", ui-sans-serif, system-ui, sans-serif !important;
   font-weight: 600 !important;
 }
 
 .ab-action-bar .MuiButton-outlined {
-  border-color: rgba(197, 213, 218, 0.95) !important;
-  color: #3b4e59 !important;
+  border-color: rgba(196, 211, 217, 0.95) !important;
+  color: #384d57 !important;
 }
 
 .ab-action-bar .MuiButton-outlined:hover {
-  border-color: rgba(39, 163, 145, 0.45) !important;
-  background: rgba(238, 251, 248, 0.85) !important;
+  border-color: rgba(31, 157, 138, 0.45) !important;
+  background: rgba(237, 250, 247, 0.9) !important;
 }
 
 .ab-action-bar .MuiSelect-root,
@@ -135,24 +185,24 @@
   font-family: "IBM Plex Mono", ui-monospace, monospace !important;
   font-size: 0.8rem !important;
   line-height: 1.45 !important;
-  border-radius: 0.75rem !important;
-  border: 1px solid rgba(197, 213, 218, 0.95) !important;
-  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 0.65rem !important;
+  border: 1px solid rgba(196, 211, 217, 0.95) !important;
+  background: #f8fbfb !important;
   padding: 0.75rem !important;
 }
 
 .ab-action-bar .MuiDialog-paper {
-  border-radius: 1rem !important;
-  border: 1px solid rgba(197, 213, 218, 0.85);
-  box-shadow: 0 24px 50px -28px rgba(26, 34, 40, 0.55) !important;
+  border-radius: 0.9rem !important;
+  border: 1px solid rgba(196, 211, 217, 0.85);
+  box-shadow: 0 24px 50px -28px rgba(18, 24, 29, 0.55) !important;
 }
 
 .MuiDialog-paper {
-  border-radius: 1rem !important;
+  border-radius: 0.9rem !important;
 }
 
 .MuiMenu-paper {
-  border-radius: 0.85rem !important;
-  border: 1px solid rgba(197, 213, 218, 0.85);
-  box-shadow: 0 18px 40px -24px rgba(26, 34, 40, 0.45) !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid rgba(196, 211, 217, 0.85);
+  box-shadow: 0 18px 40px -24px rgba(18, 24, 29, 0.45) !important;
 }

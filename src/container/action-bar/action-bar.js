@@ -120,7 +120,7 @@ export default class ActionBar extends React.Component {
             </button>
             <button
               type="button"
-              className="ab-btn-secondary w-full text-ember-600 hover:border-ember-400"
+              className="ab-btn-danger w-full"
               onClick={() =>
                 handleComponentDelete(this.props.ActionbarData.id)
               }
@@ -136,19 +136,28 @@ export default class ActionBar extends React.Component {
     const renderActionComponent = (type) => {
       if (!type) {
         return (
-          <div className="px-4 py-8 text-center text-sm text-ink-500">
-            Select a component on the canvas to edit its properties.
+          <div className="ab-inspector-empty">
+            <div className="ab-inspector-empty-icon" aria-hidden="true">
+              ··
+            </div>
+            <p className="text-sm font-semibold text-ink-800">No selection</p>
+            <p className="mt-1.5 max-w-[14rem] text-xs leading-relaxed text-ink-500">
+              Click a component on the canvas, or the page itself, to edit its
+              properties here.
+            </p>
           </div>
         );
       }
       if (type === "Form") {
         return (
-          <FormAction
-            formdata={this.props.formdata}
-            setFormdata={this.props.setFormdata}
-            ActionbarData={this.props.ActionbarData}
-            updateAppComponent={this.props.updateAppComponent}
-          />
+          <div className="ab-inspector-body">
+            <FormAction
+              formdata={this.props.formdata}
+              setFormdata={this.props.setFormdata}
+              ActionbarData={this.props.ActionbarData}
+              updateAppComponent={this.props.updateAppComponent}
+            />
+          </div>
         );
       }
       const common = {
@@ -207,11 +216,14 @@ export default class ActionBar extends React.Component {
             : "ab-action-bar-closed"
         }`}
       >
-        <div className="flex items-center justify-between border-b border-ink-100 px-2 py-2">
+        <div className="ab-action-bar-head">
           {this.props.openActionBar ? (
-            <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-500">
-              Inspector
-            </p>
+            <div className="min-w-0 px-1">
+              <p className="ab-kicker">Properties</p>
+              <p className="truncate text-sm font-semibold text-ink-900">
+                Inspector
+              </p>
+            </div>
           ) : (
             <span className="sr-only">Inspector</span>
           )}
@@ -234,8 +246,9 @@ export default class ActionBar extends React.Component {
         {this.props.openActionBar ? (
           <div className="ab-action-bar-scroll">
             {this.props.ActionbarData && this.props.ActionbarData.type ? (
-              <div className="border-b border-ink-100 px-4 py-3">
-                <p className="font-display text-xl font-semibold text-ink-900">
+              <div className="ab-inspector-title">
+                <p className="ab-kicker">Selected</p>
+                <p className="mt-1 font-display text-xl font-semibold text-ink-900">
                   {this.props.ActionbarData.type}
                 </p>
               </div>
