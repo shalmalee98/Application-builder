@@ -103,4 +103,28 @@
   .ab-workspace {
     @apply flex min-h-0 flex-1 overflow-hidden bg-[var(--canvas-bg)];
   }
+
+  .ab-dataset-source {
+    @apply mb-3 rounded-xl border border-ink-200/90 bg-ink-50/70 p-3;
+  }
+
+  .ab-dataset-meta {
+    @apply mt-3 flex items-center justify-between gap-2 rounded-lg border border-ink-200 bg-white px-2.5 py-2 text-xs;
+  }
+
+  .ab-upload-drop {
+    @apply flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-tide-300 bg-tide-50/50 px-3 py-4 text-center transition hover:border-tide-400 hover:bg-tide-50;
+  }
+
+  .ab-image-preview {
+    @apply mt-3 overflow-hidden rounded-lg border border-ink-200 bg-white;
+  }
+
+  .ab-image-preview img {
+    display: block;
+    width: 100%;
+    max-height: 140px;
+    object-fit: contain;
+    background: #f2f6f7;
+  }
 }
