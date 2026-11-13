@@ -201,8 +201,11 @@ export default class AppBuilder extends React.Component {
         },
       ],
     };
-    this.setSaved(true);
-    save_file(app);
+    save_file(app).then((result) => {
+      if (result != null) {
+        this.setSaved(true);
+      }
+    });
   };
 
   onComponentSelect = (data) => {
