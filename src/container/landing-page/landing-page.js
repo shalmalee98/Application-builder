@@ -60,16 +60,25 @@ export default function LandingPage(props) {
   };
 
   const openApp = () => {
-    getApplicationList().then((data) => {
-      const names =
-        data && typeof data === "object" ? Object.keys(data) : [];
-      if (names.indexOf(props.appName) !== -1) {
-        notifyInfo("This application already exists — opening it instead");
-        handleListItemClick(props.appName);
-        return;
-      }
-      props.openApplication();
-    });
+    const name = String(props.appName || "").trim();
+    if (!name) {
+      return;
+    }
+    getApplicationList()
+      .then((data) => {
+        const names =
+          data && typeof data === "object" ? Object.keys(data) : [];
+        if (names.indexOf(name) !== -1) {
+          notifyInfo("This application already exists — opening it instead");
+          handleListItemClick(name);
+          return;
+        }
+        props.openApplication();
+      })
+      .catch(() => {
+        // Still open a blank app if the library call fails.
+        props.openApplication();
+      });
   };
 
   const handleListItemClick = (appName) => {

@@ -147,11 +147,13 @@ export default class AppBuilder extends React.Component {
   };
 
   addComponentToForm = (data) => {
-    this.setComponentID(this.state.componentID + 1);
-    data.id = "comp_" + this.state.componentID;
-
-    let tmpcomp = [...this.state.appComponent, data];
-    this.setAppComponent(tmpcomp);
+    const nextId = this.state.componentID + 1;
+    data.id = "comp_" + nextId;
+    this.setComponentID(nextId);
+    this.setAppComponent([...this.state.appComponent, data]);
+    this.setActionbarData(data);
+    this.setComponentBorder(data.id);
+    this.setOpenActionBar(true);
   };
 
   updateAppComponent = (data) => {
@@ -210,6 +212,8 @@ export default class AppBuilder extends React.Component {
 
   openApplication = () => {
     this.setOpen(true);
+    this.setOpenSideNav(true);
+    this.setOpenActionBar(true);
     this.setActionbarData(this.state.formdata);
   };
 

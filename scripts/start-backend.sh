@@ -28,7 +28,16 @@ until curl -sf "http://127.0.0.1:${API_PORT}/" >/dev/null 2>&1; do
   sleep 1
 done
 
-echo "Spring Boot is ready. Starting public proxy on ${PORT}..."
+echo "Spring Boot is ready. Initializing projects path..."
+# The jar remembers PROJECTS_PATH after the first /save. Seed it so /getall
+# works on a fresh container before any user save.
+INIT_PATH="${PROJECTS_DIR%/}/"
+curl -sf -X POST "http://127.0.0.1:${API_PORT}/save?path=${INIT_PATH}" \
+  -H "Content-Type: application/json" \
+  -d "{\"name\":\"__healthcheck\",\"path\":\"${INIT_PATH}\",\"Pages\":[{\"type\":\"Json\",\"content\":{\"name\":\"__healthcheck\",\"width\":1,\"height\":1,\"componentID\":0,\"style\":{},\"components\":[]}},{\"type\":\"HTML\",\"content\":\"<!doctype html><title>ok</title>\"}]}" \
+  >/dev/null || echo "Warning: projects path seed failed (getall may 500 until first save)"
+
+echo "Starting public proxy on ${PORT}..."
 export API_ORIGIN="http://127.0.0.1:${API_PORT}"
 export PROJECTS_DIR
 export PORT

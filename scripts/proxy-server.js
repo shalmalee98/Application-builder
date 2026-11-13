@@ -43,6 +43,9 @@ function proxyToApi(req, res) {
   const headers = Object.assign({}, req.headers, {
     host: target.host,
   });
+  const urlPath = (req.url || "/").split("?")[0];
+  const softenGetall =
+    req.method === "GET" && (urlPath === "/getall" || urlPath === "/getall/");
 
   const upstream = lib.request(
     {
@@ -56,12 +59,28 @@ function proxyToApi(req, res) {
     (upRes) => {
       const outHeaders = Object.assign({}, upRes.headers);
       outHeaders["access-control-allow-origin"] = "*";
+
+      // Fresh jar returns 500 for /getall until a save sets the projects path.
+      if (softenGetall && (upRes.statusCode || 500) >= 500) {
+        upRes.resume();
+        sendCors(res);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end("{}");
+        return;
+      }
+
       res.writeHead(upRes.statusCode || 502, outHeaders);
       upRes.pipe(res);
     }
   );
 
   upstream.on("error", (err) => {
+    if (softenGetall) {
+      sendCors(res);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end("{}");
+      return;
+    }
     sendCors(res);
     res.writeHead(502, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ error: "API unavailable", detail: String(err) }));
